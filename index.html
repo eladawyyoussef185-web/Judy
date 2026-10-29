@@ -17,13 +17,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
 
         body {
-            /* تعديل الخلفية عشان الصورة تظهر كلها من غير ما دماغها تتقص */
-            background-image: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('b1.jpg');
-            background-size: contain; /* بتعرض الصورة بالكامل من غير قص */
-            background-repeat: no-repeat;
-            background-position: center;
-            background-color: #0f172a; /* لون خلفية مكمل لو فيه مسافات فاضية */
-            background-attachment: fixed;
+            background-color: #0b0f19;
             color: var(--text);
             min-height: 100vh;
             display: flex;
@@ -33,20 +27,53 @@
             padding: 15px;
         }
 
-        /* شاشة الباسورد */
+        /* شاشة الباسورد المقسمة (نص صورة ونص خانة إدخال) */
         #lock-screen {
             width: 100%;
-            max-width: 400px;
+            max-width: 750px;
             background: var(--card-bg);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            text-align: center;
-            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            overflow: hidden;
+            display: flex;
+            flex-direction: row-reverse; /* الشمال واليمين مظبوطين */
             animation: fadeIn 0.5s ease;
         }
-        #lock-screen h2 { color: var(--primary); font-size: 1.4rem; margin-bottom: 10px; }
-        #lock-screen p { color: #64748b; font-size: 0.9rem; margin-bottom: 15px; }
+
+        @media (max-width: 768px) {
+            #lock-screen {
+                flex-direction: column;
+                max-width: 400px;
+            }
+        }
+
+        .lock-img-side {
+            flex: 1;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 280px;
+        }
+        .lock-img-side img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .lock-form-side {
+            flex: 1;
+            padding: 35px 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .lock-form-side h2 { color: var(--primary); font-size: 1.4rem; margin-bottom: 8px; }
+        .lock-form-side p { color: #64748b; font-size: 0.85rem; margin-bottom: 20px; }
         
         .password-input {
             width: 100%;
@@ -74,6 +101,19 @@
             margin-top: 15px;
         }
         .btn:hover { opacity: 0.9; transform: scale(1.02); }
+
+        .creator-tag {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+        .creator-tag span {
+            color: var(--accent);
+            font-family: monospace;
+            font-size: 1rem;
+            font-weight: 900;
+        }
 
         /* المحتوى الأساسي بعد الباسورد */
         #main-content {
@@ -115,7 +155,7 @@
 
         .photo-frame {
             width: 100%;
-            max-height: 450px; /* زيادة الطول عشان الصورة تظهر كاملة براحتها */
+            max-height: 450px;
             border-radius: 14px;
             overflow: hidden;
             background: #000;
@@ -127,7 +167,7 @@
             width: 100%;
             height: auto;
             max-height: 450px;
-            object-fit: contain; /* تضمن إن الصورة تظهر بالكامل من غير ما يتقص منها أي جزء */
+            object-fit: contain;
             display: block;
         }
 
@@ -191,14 +231,22 @@
 </head>
 <body>
 
-    <!-- شاشة الباسورد وخلفيتها صورة b1.jpg كاملة -->
+    <!-- شاشة الباسورد المقسمة (صورة يمين وخانة إدخال واسمك شمال) -->
     <div id="lock-screen">
-        <i class="fas fa-lock" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 15px;"></i>
-        <h2>مفتاح الدخول 🔐</h2>
-        <p>أدخلي تاريخ الميلاد الخاص بكِ للمتابعة:</p>
-        <input type="password" id="pass-input" class="password-input" placeholder="********" maxlength="8">
-        <button class="btn" onclick="checkPassword()">فتح الهدية ✨</button>
-        <p id="pass-error" style="color: #ef4444; font-size: 0.8rem; margin-top: 8px; display: none;">كلمة المرور غير صحيحة!</p>
+        <div class="lock-img-side">
+            <img src="b1.jpg" alt="Judy Photo" onerror="this.src='https://via.placeholder.com/400x500?text=b1.jpg'">
+        </div>
+        <div class="lock-form-side">
+            <i class="fas fa-lock" style="font-size: 2rem; color: var(--accent); margin-bottom: 12px;"></i>
+            <h2>مفتاح الدخول 🔐</h2>
+            <p>أدخلي تاريخ الميلاد للمتابعة:</p>
+            <input type="password" id="pass-input" class="password-input" placeholder="********" maxlength="8">
+            <button class="btn" onclick="checkPassword()">فتح الهدية ✨</button>
+            <p id="pass-error" style="color: #ef4444; font-size: 0.8rem; margin-top: 8px; display: none;">كلمة المرور غير صحيحة!</p>
+            <div class="creator-tag">
+                بواسطة: <span>jou</span>
+            </div>
+        </div>
     </div>
 
     <!-- المحتوى بعد الباسورد -->
@@ -241,10 +289,10 @@
 
     <script>
         function checkPassword() {
-            const inputVal = document.getElementById('pass-input').value;
+            TheVal = document.getElementById('pass-input').value;
             const correctPass = "25122008";
 
-            if (inputVal === correctPass) {
+            if (TheVal === correctPass) {
                 document.getElementById('lock-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'flex';
             } else {
@@ -254,7 +302,6 @@
             }
         }
 
-        // دالة ظهور الرسالة بانسيابية
         function revealMessage() {
             const msgContainer = document.getElementById('message-container');
             msgContainer.classList.add('show');
