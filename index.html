@@ -17,8 +17,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
 
         body {
-            /* الخلفية هي صورة b1.jpg المباشرة بفلتر غامق شيك عشان الكلام يبان واضحة */
-            background-image: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), url('b1.jpg');
+            background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('b1.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -38,7 +37,7 @@
             background: var(--card-bg);
             padding: 30px;
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
             text-align: center;
             backdrop-filter: blur(10px);
             animation: fadeIn 0.5s ease;
@@ -71,7 +70,7 @@
             width: 100%;
             margin-top: 15px;
         }
-        .btn:hover { opacity: 0.9; }
+        .btn:hover { opacity: 0.9; transform: scale(1.02); }
 
         /* المحتوى الأساسي بعد الباسورد */
         #main-content {
@@ -79,28 +78,43 @@
             width: 100%;
             max-width: 550px;
             flex-direction: column;
+            align-items: center;
             gap: 20px;
             animation: fadeIn 0.6s ease;
         }
 
         .birthday-header {
+            width: 100%;
             text-align: center;
             background: var(--card-bg);
             padding: 20px;
             border-radius: 18px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
-        .birthday-header h1 { color: var(--accent); font-size: 2rem; font-weight: 900; }
-        .birthday-header p { color: #475569; font-size: 1rem; margin-top: 5px; }
+        .birthday-header h1 { color: var(--accent); font-size: 2.2rem; font-weight: 900; }
 
-        /* عرض الصورة الثابتة الأساسية بكامل شياكتها */
+        /* كارت الصورة التفاعلي */
+        .photo-card {
+            width: 100%;
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 20px;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+        .photo-card:hover {
+            transform: translateY(-5px) scale(1.01);
+            border-color: var(--accent);
+        }
+
         .photo-frame {
             width: 100%;
             height: 320px;
-            border-radius: 18px;
+            border-radius: 14px;
             overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-            border: 4px solid #fff;
             background: #000;
         }
         .photo-frame img {
@@ -110,15 +124,39 @@
             display: block;
         }
 
-        /* صندوق الرسالة الطويلة */
+        .photo-caption {
+            margin-top: 12px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* صندوق الرسالة مع تأثير الظهور الانسيابي */
+        #message-container {
+            display: none;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        #message-container.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .message-box {
             background: var(--card-bg);
-            padding: 25px;
+            padding: 30px;
             border-radius: 18px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
             text-align: right;
-            font-size: 1rem;
-            line-height: 2;
+            font-size: 1.05rem;
+            line-height: 2.1;
             color: #334155;
             border-right: 6px solid var(--accent);
         }
@@ -147,7 +185,7 @@
 </head>
 <body>
 
-    <!-- شاشة الباسورد (خلفيتها صورة b1.jpg مباشرة) -->
+    <!-- شاشة الباسورد -->
     <div id="lock-screen">
         <i class="fas fa-lock" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 15px;"></i>
         <h2>مفتاح الدخول 🔐</h2>
@@ -162,20 +200,27 @@
         
         <div class="birthday-header">
             <h1>Happy Birthday Judy! 🎂🎉</h1>
-            <p>إلى أجدع وأغلى إنسانة في الدنيا</p>
         </div>
 
-        <!-- إطار الصورة الثابتة الواضحة -->
-        <div class="photo-frame">
-            <img src="b1.jpg" alt="Judy Photo" onerror="this.src='https://via.placeholder.com/600x400?text=Please+Upload+b1.jpg'">
+        <!-- صورة قابلة للضغط -->
+        <div class="photo-card" onclick="revealMessage()">
+            <div class="photo-frame">
+                <img src="b1.jpg" alt="Judy Photo" onerror="this.src='https://via.placeholder.com/600x400?text=b1.jpg'">
+            </div>
+            <div class="photo-caption">
+                <span>لأجدع صاحبة 👑</span>
+                <small style="font-size:0.8rem; color:var(--accent); font-weight:normal;">(اضغطي هنا لرؤية الرسالة ✨)</small>
+            </div>
         </div>
 
-        <!-- الرسالة الطويلة جداً والمعبرة من قلبك -->
-        <div class="message-box">
-            <b>كل سنة وأنتي طيبة وبألف خير يا جودي! 🤍</b><br><br>
-            النهارده مش مجرد يوم عادي، ده اليوم اللي اتولدت فيه أجدع وأجمل أخت وصاحبة في الدنيا كلها. بجد الكلام كله بيبقى قليل ومبيديش حقك، لأنك مش مجرد صديقة عادية.. أنتي الشخص الأصيل اللي دايماً وجوده في الحياة بيدي أمان وراحة.<br><br>
-            أنتي أجدع وأطيب إنسانة ممكن حد يعرفها، الإنسانة اللي مستحيل في يوم أحس بتجاهلها أو أشك فيها من أي ناحية مهما حصل، لأن معدنك النظيف والأصيل بيبان في كل موقف صغيرة وكبيرة. دايماً كنتِ وسوف تظلي السند الحقيقي والأخت اللي لم تلدها أمي.<br><br>
-            ربنا يديمك في حياتي يا رب، وتكون السنة الجديدة دي مليانة بالنجاح والفرحة وتحققي فيها كل أحلامك وطموحاتك لأنك تستاهلي كل حاجة حلوة في الدنيا دي. دمتِ سالمة ومنورة كل مكان تكوني فيه! ❤️
+        <!-- الرسالة التي تظهر عند الضغط على الصورة -->
+        <div id="message-container">
+            <div class="message-box">
+                <b>كل سنة وأنتي طيبة وبألف خير يا جودي! 🤍</b><br><br>
+                النهارده مش مجرد يوم عادي، ده اليوم اللي اتولدت فيه أجدع وأجمل أخت وصاحبة في الدنيا كلها. بجد الكلام كله بيبقى قليل ومبيديش حقك، لأنك مش مجرد صديقة عادية.. أنتي الشخص الأصيل اللي دايماً وجوده في الحياة بيدي أمان وراحة.<br><br>
+                أنتي أجدع وأطيب إنسانة ممكن حد يعرفها، الإنسانة اللي مستحيل في يوم أحس بتجاهلها أو أشك فيها من أي ناحية مهما حصل، لأن معدنك النظيف والأصيل بيبان في كل موقف صغيرة وكبيرة. دايماً كنتِ وسوف تظلي السند الحقيقي والأخت اللي لم تلدها أمي.<br><br>
+                ربنا يديمك في حياتي يا رب، وتكون السنة الجديدة دي مليانة بالنجاح والفرحة وتحققي فيها كل أحلامك وطموحاتك لأنك تستاهلي كل حاجة حلوة في الدنيا دي. دمتِ سالمة ومنورة كل مكان تكوني فيه! ❤️
+            </div>
         </div>
 
     </div>
@@ -188,7 +233,7 @@
     <script>
         function checkPassword() {
             const inputVal = document.getElementById('pass-input').value;
-            const correctPass = "25122008"; // تاريخ ميلادها
+            const correctPass = "25122008";
 
             if (inputVal === correctPass) {
                 document.getElementById('lock-screen').style.display = 'none';
@@ -198,6 +243,13 @@
                 err.style.display = 'block';
                 setTimeout(() => { err.style.display = 'none'; }, 2000);
             }
+        }
+
+        // إظهار الرسالة بتأثير أنيميشن
+        function revealMessage() {
+            const msgContainer = document.getElementById('message-container');
+            msgContainer.classList.add('show');
+            msgContainer.scrollIntoView({ behavior: 'smooth' });
         }
     </script>
 </body>
