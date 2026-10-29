@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Judy! 🎉</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #e11d48; /* لون وردي/أحمر للاحتفال */
+            --bg-overlay: rgba(15, 23, 42, 0.85);
+            --card-bg: rgba(255, 255, 255, 0.96);
+            --text: #1e293b;
+            --bg-image: url('bg.jpg'); 
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+
+        body {
+            background-image: linear-gradient(var(--bg-overlay), var(--bg-overlay)), var(--bg-image);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 22px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* شاشة الباسورد */
+        #lock-screen h2 {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        #lock-screen p {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        .password-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            text-align: center;
+            outline: none;
+            letter-spacing: 2px;
+        }
+        .password-input:focus {
+            border-color: var(--accent);
+        }
+
+        .btn {
+            background-color: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .btn:hover { opacity: 0.9; }
+
+        /* المحتوى المخفي (الرسالة والصور) */
+        #main-content {
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .birthday-header h1 {
+            color: var(--accent);
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+
+        .birthday-header p {
+            color: #475569;
+            font-size: 0.95jlrem;
+        }
+
+        /* حاوية الصور */
+        .photo-frame {
+            width: 100%;
+            height: 220px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 3px solid #f1f5f9;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            background: #e2e8f0;
+        }
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* صندوق الرسالة المؤثرة */
+        .message-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 15px;
+            border-radius: 14px;
+            text-align: right;
+            max-height: 180px;
+            overflow-y: auto;
+            font-size: 0.92rem;
+            line-height: 1.8;
+            color: #334155;
+        }
+
+        /* رسالة الخطأ لو الوقت مش مظبوط */
+        #error-screen {
+            display: none;
+            color: #fff;
+            text-align: center;
+            background: rgba(15, 23, 42, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        #error-screen h1 { font-size: 2.5rem; color: #ef4444; margin-bottom: 10px; }
+        #error-screen p { font-size: 1.1rem; color: #cbd5e1; }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            line-height: 1.5;
+        }
+        footer .sig {
+            font-family: monospace;
+            font-weight: 900;
+            color: #f43f5e;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شاشة رسالة الخطأ لو اليوم مش 25 ديسمبر -->
+    <div id="error-screen" class="container">
+        <h1>⏳ انتظر قليلاً!</h1>
+        <p id="error-msg">هذا الموقع مخصص للفتح يوم 25 ديسمبر فقط لاحتفال عيد ميلاد جودي!</p>
+    </div>
+
+    <!-- الشاشة الأساسية (الباسورد والمحتوى) -->
+    <div id="site-container" class="container">
+        
+        <!-- شاشة إدخال الباسورد -->
+        <div id="lock-screen">
+            <i class="fas fa-lock" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 15px;"></i>
+            <h2>مفتاح الدخول 🔐</h2>
+            <p>أدخلي تاريخ الميلاد الخاص بكِ للمتابعة:</p>
+            <input type="password" id="pass-input" class="password-input" placeholder="********" maxlength="8">
+            <button class="btn" onclick="checkPassword()">فتح الهدية ✨</button>
+            <p id="pass-error" style="color: #ef4444; font-size: 0.8rem; margin-top: 8px; display: none;">كلمة المرور غير صحيحة!</p>
+        </div>
+
+        <!-- المحتوى اللي هيظهر بعد الباسورد -->
+        <div id="main-content">
+            <div class="birthday-header">
+                <h1>Happy Birthday Judy! 🎂🎉</h1>
+                <p>إلى أجدع وأغلى الناس</p>
+            </div>
+
+            <!-- صورة الاحتفال (ارفع صورتها وسميها b1.jpg) -->
+            <div class="photo-frame">
+                <img id="b-photo" src="b1.jpg" alt="صورة جودي">
+            </div>
+
+            <!-- الرسالة الطويلة المؤثرة -->
+            <div class="message-box">
+                <b>كل سنة وأنتي طيبة يا جودي! 🤍</b><br>
+                أنتي بجد مش بس صاحبة، أنتي أكتر من أخت بكتير، وأجدع وأطيب إنسانة ممكن الواحد يعرفها. الإنسانة اللي مستحيل في يوم أحس بتجاهلها أو أشك فيها من أي ناحية لأن معدنها الأصيل بيبان في كل موقف ودايماً سند. ربنا يديمك ليا يا رب وتديمي منورة حياتنا دايماً، وتكون سنة أحلى وأبيض بكتير عليكي وتحققي كل اللي بتتمنيه! ✨
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        صنع باهتمام وعزيمة بواسطة<br>
+        <span class="sig">jou</span>
+    </footer>
+
+    <script>
+        function checkDateAndAccess() {
+            const now = new Date();
+            const currentMonth = now.getMonth(); // 11 يعني ديسمبر
+            const currentDate = now.getDate();   // 25
+
+            // لو حابب تفتح الموقع للتجربة دلوقتي علق السطرين دول، وعشـان يقفل غير يوم 25 سيبه شغال:
+            if (currentMonth !== 11 || currentDate !== 25) {
+                document.getElementById('site-container').style.display = 'none';
+                document.getElementById('error-screen').style.display = 'block';
+                document.getElementById('error-msg').innerText = `الموقع مغلق حالياً.. سيفتح تلقائياً يوم 25 ديسمبر الاحتفال بعيد ميلاد جودي (اليوم الحالي: ${currentDate}/${currentMonth + 1}) ⏳`;
+            }
+        }
+
+        function checkPassword() {
+            const inputVal = document.getElementById('pass-input').value;
+            const correctPass = "25122008"; // تاريخ ميلادها
+
+            if (inputVal === correctPass) {
+                document.getElementById('lock-screen').style.display = 'none';
+                document.getElementById('main-content').style.display = 'flex';
+            } else {
+                const err = document.getElementById('pass-error');
+                err.style.display = 'block';
+                setTimeout(() => { err.style.display = 'none'; }, 2000);
+            }
+        }
+
+        window.onload = function() {
+            checkDateAndAccess();
+        };
+    </script>
+</body>
+</html>
