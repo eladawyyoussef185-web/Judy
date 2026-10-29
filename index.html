@@ -17,10 +17,12 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
 
         body {
-            /* الخلفية هي صورة b1.jpg المليانة والشاشة منورة بيها وأنت بتكتب الباسورد */
-            background-image: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), url('b1.jpg');
-            background-size: cover;
+            /* تعديل الخلفية عشان الصورة تظهر كلها من غير ما دماغها تتقص */
+            background-image: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('b1.jpg');
+            background-size: contain; /* بتعرض الصورة بالكامل من غير قص */
+            background-repeat: no-repeat;
             background-position: center;
+            background-color: #0f172a; /* لون خلفية مكمل لو فيه مسافات فاضية */
             background-attachment: fixed;
             color: var(--text);
             min-height: 100vh;
@@ -113,15 +115,19 @@
 
         .photo-frame {
             width: 100%;
-            height: 320px;
+            max-height: 450px; /* زيادة الطول عشان الصورة تظهر كاملة براحتها */
             border-radius: 14px;
             overflow: hidden;
             background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .photo-frame img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
+            max-height: 450px;
+            object-fit: contain; /* تضمن إن الصورة تظهر بالكامل من غير ما يتقص منها أي جزء */
             display: block;
         }
 
@@ -185,7 +191,7 @@
 </head>
 <body>
 
-    <!-- شاشة الباسورد وخلفيتها صورة b1.jpg -->
+    <!-- شاشة الباسورد وخلفيتها صورة b1.jpg كاملة -->
     <div id="lock-screen">
         <i class="fas fa-lock" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 15px;"></i>
         <h2>مفتاح الدخول 🔐</h2>
@@ -202,10 +208,10 @@
             <h1>Happy Birthday Judy! 🎂🎉</h1>
         </div>
 
-        <!-- صورة قابلة للضغط مكتوب تحتها لأجدع صاحبة -->
+        <!-- صورة كاملة قابلة للضغط مكتوب تحتها لأجدع صاحبة -->
         <div class="photo-card" onclick="revealMessage()">
             <div class="photo-frame">
-                <img src="b1.jpg" alt="Judy Photo" onerror="this.src='https://via.placeholder.com/600x400?text=b1.jpg'">
+                <img src="b1.jpg" alt="Judy Photo" onerror="this.src='https://via.placeholder.com/600x400?text=b1.jpg+Not+Found'">
             </div>
             <div class="photo-caption">
                 <span>لأجدع صاحبة 👑</span>
@@ -216,12 +222,12 @@
         <!-- الرسالة الطويلة بالعامية المصرية -->
         <div id="message-container">
             <div class="message-box">
-                <b>كل سنة وأنتي طيبة وبألف خير يا أجمل جودي في الدنيا! 🤍✨</b><br><br>
+                <b>كل سنة وأنتي طيبة يا جودي! 🤍✨</b><br><br>
                 النهارده مش أي يوم وخلاص، ده عيد ميلاد الشخصية اللي بجد غالية أوي وملازمنا في كل ضحكة وموقف. الواحد ساعات بيحتار يقول إيه ولا إيه، بس الحق ينقال أنتي مش مجرد صاحبة عادية بالنسبة لنا، أنتي الأخت اللي بجد بجد الواحد يفتخر إنه يعرفها ويطمن وهي جنبه.<br><br>
-                طول عمرك جدعة ومعدنك أصيل ونظيف، ومستحيل في يوم الواحد يشك في جدعنتك ولا يقلق من ناحيتك لأنك بتثبتي في كل موقف صغير وكبيرة إنك سند حقيقي وقد المسؤولية وزด زيادة. وجودك بيفرق كتير في أي مكان بتبقي فيه، ودايماً ضحكتك وطاقتك بتبسط الكل.<br><br>
+                طول عمرك جدعة ومعدنك أصيل ونظيف، ومستحيل في يوم الواحد يشك في جدعنتك ولا يقلق من ناحيتك لأنك بتثبتي في كل موقف صغيرة وكبيرة إنك سند حقيقي وقد المسؤولية وزيادة. وجودك بيفرق كتير في أي مكان بتبقي فيه، ودايماً ضحكتك وطاقتك بتبسط الكل.<br><br>
                 يا رب تكون سنة جديدة سعيدة عليكي، مليانة فرح وراحة بال، وتشوف فيها كل النجاح والتوفيق وتحققي كل اللي نفسك فيه وتفضلي دايماً منورة حياتنا ومكسرة الدنيا! 🚀❤️<br><br>
-                <div style="text-align: left; margin-top: 15px; font-weight: 800; color: var(--accent);">
-                    كل سنة وأنتي طيبة يا بطلة! ✨
+                <div style="text-align: center; margin-top: 20px; font-weight: 900; font-size: 1.3rem; color: var(--accent);">
+                    كل سنة وأنتي معانا يا جودي! 🎂✨
                 </div>
             </div>
         </div>
