@@ -9,7 +9,7 @@
     <style>
         :root {
             --primary: #0f172a;
-            --accent: #e11d48; /* لون وردي/أحمر للاحتفال */
+            --accent: #e11d48;
             --bg-overlay: rgba(15, 23, 42, 0.85);
             --card-bg: rgba(255, 255, 255, 0.96);
             --text: #1e293b;
@@ -47,7 +47,6 @@
             animation: fadeIn 0.5s ease;
         }
 
-        /* شاشة الباسورد */
         #lock-screen h2 {
             color: var(--primary);
             font-size: 1.4rem;
@@ -87,7 +86,6 @@
         }
         .btn:hover { opacity: 0.9; }
 
-        /* المحتوى المخفي (الرسالة والصور) */
         #main-content {
             display: none;
             flex-direction: column;
@@ -103,10 +101,9 @@
 
         .birthday-header p {
             color: #475569;
-            font-size: 0.95jlrem;
+            font-size: 0.95rem;
         }
 
-        /* حاوية الصور */
         .photo-frame {
             width: 100%;
             height: 220px;
@@ -122,7 +119,6 @@
             object-fit: cover;
         }
 
-        /* صندوق الرسالة المؤثرة */
         .message-box {
             background: #f8fafc;
             border: 1px solid #e2e8f0;
@@ -135,19 +131,6 @@
             line-height: 1.8;
             color: #334155;
         }
-
-        /* رسالة الخطأ لو الوقت مش مظبوط */
-        #error-screen {
-            display: none;
-            color: #fff;
-            text-align: center;
-            background: rgba(15, 23, 42, 0.9);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        #error-screen h1 { font-size: 2.5rem; color: #ef4444; margin-bottom: 10px; }
-        #error-screen p { font-size: 1.1rem; color: #cbd5e1; }
 
         footer {
             margin-top: 20px;
@@ -173,13 +156,7 @@
 </head>
 <body>
 
-    <!-- شاشة رسالة الخطأ لو اليوم مش 25 ديسمبر -->
-    <div id="error-screen" class="container">
-        <h1>⏳ انتظر قليلاً!</h1>
-        <p id="error-msg">هذا الموقع مخصص للفتح يوم 25 ديسمبر فقط لاحتفال عيد ميلاد جودي!</p>
-    </div>
-
-    <!-- الشاشة الأساسية (الباسورد والمحتوى) -->
+    <!-- الشاشة الأساسية (الباسورد والمحتوى) مباشرة -->
     <div id="site-container" class="container">
         
         <!-- شاشة إدخال الباسورد -->
@@ -199,12 +176,12 @@
                 <p>إلى أجدع وأغلى الناس</p>
             </div>
 
-            <!-- صورة الاحتفال (ارفع صورتها وسميها b1.jpg) -->
+            <!-- صورة الاحتفال -->
             <div class="photo-frame">
                 <img id="b-photo" src="b1.jpg" alt="صورة جودي">
             </div>
 
-            <!-- الرسالة الطويلة المؤثرة -->
+            <!-- الرسالة المؤثرة -->
             <div class="message-box">
                 <b>كل سنة وأنتي طيبة يا جودي! 🤍</b><br>
                 أنتي بجد مش بس صاحبة، أنتي أكتر من أخت بكتير، وأجدع وأطيب إنسانة ممكن الواحد يعرفها. الإنسانة اللي مستحيل في يوم أحس بتجاهلها أو أشك فيها من أي ناحية لأن معدنها الأصيل بيبان في كل موقف ودايماً سند. ربنا يديمك ليا يا رب وتديمي منورة حياتنا دايماً، وتكون سنة أحلى وأبيض بكتير عليكي وتحققي كل اللي بتتمنيه! ✨
@@ -219,19 +196,6 @@
     </footer>
 
     <script>
-        function checkDateAndAccess() {
-            const now = new Date();
-            const currentMonth = now.getMonth(); // 11 يعني ديسمبر
-            const currentDate = now.getDate();   // 25
-
-            // لو حابب تفتح الموقع للتجربة دلوقتي علق السطرين دول، وعشـان يقفل غير يوم 25 سيبه شغال:
-            if (currentMonth !== 11 || currentDate !== 25) {
-                document.getElementById('site-container').style.display = 'none';
-                document.getElementById('error-screen').style.display = 'block';
-                document.getElementById('error-msg').innerText = `الموقع مغلق حالياً.. سيفتح تلقائياً يوم 25 ديسمبر الاحتفال بعيد ميلاد جودي (اليوم الحالي: ${currentDate}/${currentMonth + 1}) ⏳`;
-            }
-        }
-
         function checkPassword() {
             const inputVal = document.getElementById('pass-input').value;
             const correctPass = "25122008"; // تاريخ ميلادها
@@ -245,10 +209,6 @@
                 setTimeout(() => { err.style.display = 'none'; }, 2000);
             }
         }
-
-        window.onload = function() {
-            checkDateAndAccess();
-        };
     </script>
 </body>
 </html>
