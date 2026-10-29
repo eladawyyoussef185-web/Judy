@@ -11,7 +11,7 @@
             --primary: #0f172a;
             --accent: #e11d48;
             --bg-overlay: rgba(15, 23, 42, 0.85);
-            --card-bg: rgba(255, 255, 255, 0.96);
+            --card-bg: rgba(255, 255, 255, 0.95);
             --text: #1e293b;
             --bg-image: url('bg.jpg'); 
         }
@@ -29,34 +29,24 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 15px;
+            padding: 20px;
         }
 
-        .container {
+        /* شاشة الباسورد (مربع منفصل) */
+        .lock-container {
             width: 100%;
-            max-width: 450px;
+            max-width: 400px;
             background: var(--card-bg);
-            padding: 25px;
-            border-radius: 22px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
             backdrop-filter: blur(10px);
             animation: fadeIn 0.5s ease;
         }
-
-        #lock-screen h2 {
-            color: var(--primary);
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-        }
-        #lock-screen p {
-            color: #64748b;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-        }
+        .lock-container h2 { color: var(--primary); font-size: 1.4rem; margin-bottom: 10px; }
+        .lock-container p { color: #64748b; font-size: 0.9rem; margin-bottom: 15px; }
+        
         .password-input {
             width: 100%;
             padding: 12px;
@@ -67,9 +57,7 @@
             outline: none;
             letter-spacing: 2px;
         }
-        .password-input:focus {
-            border-color: var(--accent);
-        }
+        .password-input:focus { border-color: var(--accent); }
 
         .btn {
             background-color: var(--accent);
@@ -82,60 +70,73 @@
             cursor: pointer;
             transition: 0.2s;
             width: 100%;
-            margin-top: 10px;
+            margin-top: 15px;
         }
         .btn:hover { opacity: 0.9; }
 
+        /* المحتوى الأساسي بعد فتح الباسورد */
         #main-content {
             display: none;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .birthday-header h1 {
-            color: var(--accent);
-            font-size: 1.8rem;
-            font-weight: 900;
-            margin-bottom: 5px;
-        }
-
-        .birthday-header p {
-            color: #475569;
-            font-size: 0.95rem;
-        }
-
-        .photo-frame {
             width: 100%;
-            height: 220px;
-            border-radius: 14px;
-            overflow: hidden;
-            border: 3px solid #f1f5f9;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            background: #e2e8f0;
+            max-width: 600px;
+            flex-direction: column;
+            gap: 20px;
+            animation: fadeIn 0.6s ease;
         }
-        .photo-frame img {
+
+        /* رأس الصفحة */
+        .birthday-header {
+            text-align: center;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .birthday-header h1 { color: var(--accent); font-size: 2rem; font-weight: 900; margin-bottom: 5px; }
+        .birthday-header p { color: #475569; font-size: 1rem; }
+
+        /* معرض الصور المتحركة (Slideshow) */
+        .slideshow-container {
+            width: 100%;
+            height: 320px;
+            border-radius: 18px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            border: 4px solid rgba(255,255,255,0.8);
+            background: #000;
+        }
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .slide.active { opacity: 1; }
+        .slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
+        /* صندوق الرسالة الواسع والمنفصل */
         .message-box {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            padding: 15px;
-            border-radius: 14px;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             text-align: right;
-            max-height: 180px;
-            overflow-y: auto;
-            font-size: 0.92rem;
-            line-height: 1.8;
+            font-size: 1rem;
+            line-height: 1.9;
             color: #334155;
+            border-right: 6px solid var(--accent);
         }
 
         footer {
-            margin-top: 20px;
+            margin-top: 25px;
             text-align: center;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: #fff;
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
             line-height: 1.5;
@@ -144,48 +145,47 @@
             font-family: monospace;
             font-weight: 900;
             color: #f43f5e;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             letter-spacing: 2px;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-    <!-- الشاشة الأساسية (الباسورد والمحتوى) مباشرة -->
-    <div id="site-container" class="container">
+    <!-- شاشة الباسورد -->
+    <div id="lock-screen" class="lock-container">
+        <i class="fas fa-lock" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 15px;"></i>
+        <h2>مفتاح الدخول 🔐</h2>
+        <p>أدخلي تاريخ الميلاد الخاص بكِ للمتابعة:</p>
+        <input type="password" id="pass-input" class="password-input" placeholder="********" maxlength="8">
+        <button class="btn" onclick="checkPassword()">فتح الهدية ✨</button>
+        <p id="pass-error" style="color: #ef4444; font-size: 0.8rem; margin-top: 8px; display: none;">كلمة المرور غير صحيحة!</p>
+    </div>
+
+    <!-- المحتوى بعد الباسورد -->
+    <div id="main-content">
         
-        <!-- شاشة إدخال الباسورد -->
-        <div id="lock-screen">
-            <i class="fas fa-lock" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 15px;"></i>
-            <h2>مفتاح الدخول 🔐</h2>
-            <p>أدخلي تاريخ الميلاد الخاص بكِ للمتابعة:</p>
-            <input type="password" id="pass-input" class="password-input" placeholder="********" maxlength="8">
-            <button class="btn" onclick="checkPassword()">فتح الهدية ✨</button>
-            <p id="pass-error" style="color: #ef4444; font-size: 0.8rem; margin-top: 8px; display: none;">كلمة المرور غير صحيحة!</p>
+        <div class="birthday-header">
+            <h1>Happy Birthday Judy! 🎂🎉</h1>
+            <p>إلى أجدع وأغلى الناس</p>
         </div>
 
-        <!-- المحتوى اللي هيظهر بعد الباسورد -->
-        <div id="main-content">
-            <div class="birthday-header">
-                <h1>Happy Birthday Judy! 🎂🎉</h1>
-                <p>إلى أجدع وأغلى الناس</p>
-            </div>
+        <!-- معرض الصور الثلاثة المتحركة (تتغير تلقائياً) -->
+        <div class="slideshow-container">
+            <div class="slide active"><img src="b1.jpg" alt="صورة 1"></div>
+            <div class="slide"><img src="b2.jpg" alt="صورة 2"></div>
+            <div class="slide"><img src="b3.jpg" alt="صورة 3"></div>
+        </div>
 
-            <!-- صورة الاحتفال -->
-            <div class="photo-frame">
-                <img id="b-photo" src="b1.jpg" alt="صورة جودي">
-            </div>
-
-            <!-- الرسالة المؤثرة -->
-            <div class="message-box">
-                <b>كل سنة وأنتي طيبة يا جودي! 🤍</b><br>
-                أنتي بجد مش بس صاحبة، أنتي أكتر من أخت بكتير، وأجدع وأطيب إنسانة ممكن الواحد يعرفها. الإنسانة اللي مستحيل في يوم أحس بتجاهلها أو أشك فيها من أي ناحية لأن معدنها الأصيل بيبان في كل موقف ودايماً سند. ربنا يديمك ليا يا رب وتديمي منورة حياتنا دايماً، وتكون سنة أحلى وأبيض بكتير عليكي وتحققي كل اللي بتتمنيه! ✨
-            </div>
+        <!-- صندوق الرسالة الطويلة الواسع -->
+        <div class="message-box">
+            <b>كل سنة وأنتي طيبة يا جودي! 🤍</b><br><br>
+            أنتي بجد مش بس صاحبة، أنتي أكتر من أخت بكتير، وأجدع وأطيب إنسانة ممكن الواحد يعرفها. الإنسانة اللي مستحيل في يوم أحس بتجاهلها أو أشك فيها من أي ناحية لأن معدنها الأصيل بيبان في كل موقف ودايماً سند حقيقي. ربنا يديمك ليا يا رب وتديمي منورة حياتنا دايماً، وتكون سنة أحلى وأبيض بكتير عليكي وتحققي كل اللي بتتمنيه! ✨
         </div>
 
     </div>
@@ -196,18 +196,32 @@
     </footer>
 
     <script>
+        // التحقق من الباسورد
         function checkPassword() {
             const inputVal = document.getElementById('pass-input').value;
-            const correctPass = "25122008"; // تاريخ ميلادها
+            const correctPass = "25122008";
 
             if (inputVal === correctPass) {
                 document.getElementById('lock-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'flex';
+                startSlideshow(); // بدء تحريك الصور أول ما تفتح الموقع
             } else {
                 const err = document.getElementById('pass-error');
                 err.style.display = 'block';
                 setTimeout(() => { err.style.display = 'none'; }, 2000);
             }
+        }
+
+        // نظام تقليب الصور الثلاثة تلقائياً بتأثير فخم
+        function startSlideshow() {
+            let slides = document.querySelectorAll('.slide');
+            let currentSlide = 0;
+
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 3500); // تتغير الصورة كل 3.5 ثانية
         }
     </script>
 </body>
