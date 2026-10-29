@@ -17,7 +17,8 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
 
         body {
-            background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('b1.jpg');
+            /* الخلفية هي صورة b1.jpg المليانة والشاشة منورة بيها وأنت بتكتب الباسورد */
+            background-image: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), url('b1.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -130,12 +131,11 @@
             font-weight: 800;
             color: var(--primary);
             display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            flex-direction: column;
+            gap: 4px;
         }
 
-        /* صندوق الرسالة مع تأثير الظهور الانسيابي */
+        /* صندوق الرسالة مع تأثير الظهور */
         #message-container {
             display: none;
             width: 100%;
@@ -185,7 +185,7 @@
 </head>
 <body>
 
-    <!-- شاشة الباسورد -->
+    <!-- شاشة الباسورد وخلفيتها صورة b1.jpg -->
     <div id="lock-screen">
         <i class="fas fa-lock" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 15px;"></i>
         <h2>مفتاح الدخول 🔐</h2>
@@ -202,24 +202,27 @@
             <h1>Happy Birthday Judy! 🎂🎉</h1>
         </div>
 
-        <!-- صورة قابلة للضغط -->
+        <!-- صورة قابلة للضغط مكتوب تحتها لأجدع صاحبة -->
         <div class="photo-card" onclick="revealMessage()">
             <div class="photo-frame">
                 <img src="b1.jpg" alt="Judy Photo" onerror="this.src='https://via.placeholder.com/600x400?text=b1.jpg'">
             </div>
             <div class="photo-caption">
                 <span>لأجدع صاحبة 👑</span>
-                <small style="font-size:0.8rem; color:var(--accent); font-weight:normal;">(اضغطي هنا لرؤية الرسالة ✨)</small>
+                <small style="font-size:0.85rem; color:var(--accent); font-weight:600;">(اضغطي هنا عشان تشوفي المفاجأة ✨)</small>
             </div>
         </div>
 
-        <!-- الرسالة التي تظهر عند الضغط على الصورة -->
+        <!-- الرسالة الطويلة بالعامية المصرية -->
         <div id="message-container">
             <div class="message-box">
-                <b>كل سنة وأنتي طيبة وبألف خير يا جودي! 🤍</b><br><br>
-                النهارده مش مجرد يوم عادي، ده اليوم اللي اتولدت فيه أجدع وأجمل أخت وصاحبة في الدنيا كلها. بجد الكلام كله بيبقى قليل ومبيديش حقك، لأنك مش مجرد صديقة عادية.. أنتي الشخص الأصيل اللي دايماً وجوده في الحياة بيدي أمان وراحة.<br><br>
-                أنتي أجدع وأطيب إنسانة ممكن حد يعرفها، الإنسانة اللي مستحيل في يوم أحس بتجاهلها أو أشك فيها من أي ناحية مهما حصل، لأن معدنك النظيف والأصيل بيبان في كل موقف صغيرة وكبيرة. دايماً كنتِ وسوف تظلي السند الحقيقي والأخت اللي لم تلدها أمي.<br><br>
-                ربنا يديمك في حياتي يا رب، وتكون السنة الجديدة دي مليانة بالنجاح والفرحة وتحققي فيها كل أحلامك وطموحاتك لأنك تستاهلي كل حاجة حلوة في الدنيا دي. دمتِ سالمة ومنورة كل مكان تكوني فيه! ❤️
+                <b>كل سنة وأنتي طيبة وبألف خير يا أجمل جودي في الدنيا! 🤍✨</b><br><br>
+                النهارده مش أي يوم وخلاص، ده عيد ميلاد الشخصية اللي بجد غالية أوي وملازمنا في كل ضحكة وموقف. الواحد ساعات بيحتار يقول إيه ولا إيه، بس الحق ينقال أنتي مش مجرد صاحبة عادية بالنسبة لنا، أنتي الأخت اللي بجد بجد الواحد يفتخر إنه يعرفها ويطمن وهي جنبه.<br><br>
+                طول عمرك جدعة ومعدنك أصيل ونظيف، ومستحيل في يوم الواحد يشك في جدعنتك ولا يقلق من ناحيتك لأنك بتثبتي في كل موقف صغير وكبيرة إنك سند حقيقي وقد المسؤولية وزด زيادة. وجودك بيفرق كتير في أي مكان بتبقي فيه، ودايماً ضحكتك وطاقتك بتبسط الكل.<br><br>
+                يا رب تكون سنة جديدة سعيدة عليكي، مليانة فرح وراحة بال، وتشوف فيها كل النجاح والتوفيق وتحققي كل اللي نفسك فيه وتفضلي دايماً منورة حياتنا ومكسرة الدنيا! 🚀❤️<br><br>
+                <div style="text-align: left; margin-top: 15px; font-weight: 800; color: var(--accent);">
+                    كل سنة وأنتي طيبة يا بطلة! ✨
+                </div>
             </div>
         </div>
 
@@ -245,7 +248,7 @@
             }
         }
 
-        // إظهار الرسالة بتأثير أنيميشن
+        // دالة ظهور الرسالة بانسيابية
         function revealMessage() {
             const msgContainer = document.getElementById('message-container');
             msgContainer.classList.add('show');
