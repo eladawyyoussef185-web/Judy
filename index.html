@@ -10,16 +10,15 @@
         :root {
             --primary: #0f172a;
             --accent: #e11d48;
-            --bg-overlay: rgba(15, 23, 42, 0.88);
-            --card-bg: rgba(255, 255, 255, 0.96);
+            --card-bg: rgba(255, 255, 255, 0.95);
             --text: #1e293b;
-            --bg-image: url('bg.jpg'); 
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
 
         body {
-            background-image: linear-gradient(var(--bg-overlay), var(--bg-overlay)), var(--bg-image);
+            /* الخلفية هي صورة b1.jpg المباشرة بفلتر غامق شيك عشان الكلام يبان واضحة */
+            background-image: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), url('b1.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -28,11 +27,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px 10px;
+            justify-content: center;
+            padding: 15px;
         }
 
         /* شاشة الباسورد */
-        .lock-container {
+        #lock-screen {
             width: 100%;
             max-width: 400px;
             background: var(--card-bg);
@@ -40,11 +40,11 @@
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             text-align: center;
-            margin-top: 10vh;
+            backdrop-filter: blur(10px);
             animation: fadeIn 0.5s ease;
         }
-        .lock-container h2 { color: var(--primary); font-size: 1.4rem; margin-bottom: 10px; }
-        .lock-container p { color: #64748b; font-size: 0.9rem; margin-bottom: 15px; }
+        #lock-screen h2 { color: var(--primary); font-size: 1.4rem; margin-bottom: 10px; }
+        #lock-screen p { color: #64748b; font-size: 0.9rem; margin-bottom: 15px; }
         
         .password-input {
             width: 100%;
@@ -73,127 +73,69 @@
         }
         .btn:hover { opacity: 0.9; }
 
-        /* المحتوى الأساسي */
+        /* المحتوى الأساسي بعد الباسورد */
         #main-content {
             display: none;
             width: 100%;
-            max-width: 680px;
+            max-width: 550px;
             flex-direction: column;
-            gap: 25px;
+            gap: 20px;
             animation: fadeIn 0.6s ease;
         }
 
         .birthday-header {
             text-align: center;
             background: var(--card-bg);
-            padding: 25px;
-            border-radius: 20px;
+            padding: 20px;
+            border-radius: 18px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-        .birthday-header h1 { color: var(--accent); font-size: 2.2rem; font-weight: 900; }
-        .birthday-header p { color: #475569; font-size: 1.05rem; margin-top: 5px; }
+        .birthday-header h1 { color: var(--accent); font-size: 2rem; font-weight: 900; }
+        .birthday-header p { color: #475569; font-size: 1rem; margin-top: 5px; }
 
-        /* معرض الصور المنتقلة */
-        .slideshow-container {
+        /* عرض الصورة الثابتة الأساسية بكامل شياكتها */
+        .photo-frame {
             width: 100%;
-            height: 380px;
-            border-radius: 20px;
+            height: 320px;
+            border-radius: 18px;
             overflow: hidden;
-            position: relative;
             box-shadow: 0 15px 35px rgba(0,0,0,0.4);
             border: 4px solid #fff;
-            background: #1e293b;
+            background: #000;
         }
-        .slide {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 0.8s ease-in-out;
-        }
-        .slide.active { opacity: 1; }
-        .slide img {
+        .photo-frame img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
         }
 
-        /* الرسالة الكبيرة جداً */
+        /* صندوق الرسالة الطويلة */
         .message-box {
             background: var(--card-bg);
-            padding: 30px;
-            border-radius: 20px;
+            padding: 25px;
+            border-radius: 18px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             text-align: right;
-            font-size: 1.05rem;
-            line-height: 2.1;
+            font-size: 1rem;
+            line-height: 2;
             color: #334155;
             border-right: 6px solid var(--accent);
         }
-        .message-box h3 {
-            color: var(--accent);
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-        }
-
-        /* قسم رسائل الشلة المجهولة */
-        .anonymous-section {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        .anonymous-section h3 {
-            color: var(--primary);
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .anonymous-card {
-            background: #f8fafc;
-            border: 1px dashed #cbd5e1;
-            padding: 15px;
-            border-radius: 12px;
-            margin-top: 12px;
-            font-size: 0.95rem;
-            color: #475569;
-        }
-
-        .send-box {
-            margin-top: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .send-box textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 10px;
-            resize: none;
-            height: 80px;
-            outline: none;
-            font-family: 'Cairo';
-        }
 
         footer {
-            margin-top: 30px;
+            margin-top: 25px;
             text-align: center;
             font-size: 0.9rem;
             color: #fff;
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
             line-height: 1.6;
-            padding-bottom: 20px;
         }
         footer .sig {
             font-family: monospace;
             font-weight: 900;
             color: #f43f5e;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             letter-spacing: 2px;
         }
 
@@ -205,8 +147,8 @@
 </head>
 <body>
 
-    <!-- شاشة الباسورد -->
-    <div id="lock-screen" class="lock-container">
+    <!-- شاشة الباسورد (خلفيتها صورة b1.jpg مباشرة) -->
+    <div id="lock-screen">
         <i class="fas fa-lock" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 15px;"></i>
         <h2>مفتاح الدخول 🔐</h2>
         <p>أدخلي تاريخ الميلاد الخاص بكِ للمتابعة:</p>
@@ -220,47 +162,20 @@
         
         <div class="birthday-header">
             <h1>Happy Birthday Judy! 🎂🎉</h1>
-            <p>إلى أجدع وأفخم إنسانة في الدنيا</p>
+            <p>إلى أجدع وأغلى إنسانة في الدنيا</p>
         </div>
 
-        <!-- معرض الصور (تأكد من أسماء الملفات تماماً) -->
-        <div class="slideshow-container">
-            <div class="slide active"><img src="b1.jpg" alt="Judy Photo 1" onerror="this.src='https://via.placeholder.com/600x400?text=Image+b1.jpg+Not+Found'"></div>
-            <div class="slide"><img src="b2.jpg" alt="Judy Photo 2" onerror="this.src='https://via.placeholder.com/600x400?text=Image+b2.jpg+Not+Found'"></div>
-            <div class="slide"><img src="b3.jpg" alt="Judy Photo 3" onerror="this.src='https://via.placeholder.com/600x400?text=Image+b3.jpg+Not+Found'"></div>
+        <!-- إطار الصورة الثابتة الواضحة -->
+        <div class="photo-frame">
+            <img src="b1.jpg" alt="Judy Photo" onerror="this.src='https://via.placeholder.com/600x400?text=Please+Upload+b1.jpg'">
         </div>
 
-        <!-- الرسالة الطويلة جداً والمعبرة -->
+        <!-- الرسالة الطويلة جداً والمعبرة من قلبك -->
         <div class="message-box">
-            <h3>رسالة من القلب.. 🤍</h3>
-            كل سنة وأنتي طيبة وبألف خير يا جودي! 🎂✨<br><br>
+            <b>كل سنة وأنتي طيبة وبألف خير يا جودي! 🤍</b><br><br>
             النهارده مش مجرد يوم عادي، ده اليوم اللي اتولدت فيه أجدع وأجمل أخت وصاحبة في الدنيا كلها. بجد الكلام كله بيبقى قليل ومبيديش حقك، لأنك مش مجرد صديقة عادية.. أنتي الشخص الأصيل اللي دايماً وجوده في الحياة بيدي أمان وراحة.<br><br>
             أنتي أجدع وأطيب إنسانة ممكن حد يعرفها، الإنسانة اللي مستحيل في يوم أحس بتجاهلها أو أشك فيها من أي ناحية مهما حصل، لأن معدنك النظيف والأصيل بيبان في كل موقف صغيرة وكبيرة. دايماً كنتِ وسوف تظلي السند الحقيقي والأخت اللي لم تلدها أمي.<br><br>
             ربنا يديمك في حياتي يا رب، وتكون السنة الجديدة دي مليانة بالنجاح والفرحة وتحققي فيها كل أحلامك وطموحاتك لأنك تستاهلي كل حاجة حلوة في الدنيا دي. دمتِ سالمة ومنورة كل مكان تكوني فيه! ❤️
-        </div>
-
-        <!-- قسم رسائل الشلة المجهولة والتفاعلية -->
-        <div class="anonymous-section">
-            <h3><i class="fas fa-user-secret" style="color:var(--accent);"></i> رسائل من مجهول 🕵️‍♂️</h3>
-            <p style="font-size: 0.88rem; color:#64748b;">رسائل سرية سابوهالك أصحابك في الشلة بمناسبة عيد ميلادك:</p>
-
-            <div id="messages-list">
-                <div class="anonymous-card">
-                    <b>👤 شخص مجهول (1):</b><br>
-                    "كل سنة وأنتي أجدع جودي في الدنيا! ربنا يديم ضحكتك وتفضل دايماً مفرحانا في الشلة! 🎉"
-                </div>
-                <div class="anonymous-card">
-                    <b>👤 شخص مجهول (2):</b><br>
-                    "عيد ميلاد سعيد يا بطلة! عقبال 100 سنة نجاح وتفوق وراحة بال يارب 🤍"
-                </div>
-            </div>
-
-            <!-- صندوق إرسال رسالة جديدة للشلة -->
-            <div class="send-box">
-                <p style="font-size: 0.85rem; color:#1e293b; margin-top:10px; font-weight:700;">لو حد من الشلة داخل يشوف، اكتب رسالتك هنا واضغط إرسال:</p>
-                <textarea id="anon-input" placeholder="اكتب رسالتك السرية لجودي هنا..."></textarea>
-                <button class="btn" style="margin-top:0;" onclick="sendAnonMessage()">إرسال الرسالة 🚀</button>
-            </div>
         </div>
 
     </div>
@@ -273,56 +188,16 @@
     <script>
         function checkPassword() {
             const inputVal = document.getElementById('pass-input').value;
-            const correctPass = "25122008";
+            const correctPass = "25122008"; // تاريخ ميلادها
 
             if (inputVal === correctPass) {
                 document.getElementById('lock-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'flex';
-                startSlideshow();
-                loadSavedMessages();
             } else {
                 const err = document.getElementById('pass-error');
                 err.style.display = 'block';
                 setTimeout(() => { err.style.display = 'none'; }, 2000);
             }
-        }
-
-        function startSlideshow() {
-            let slides = document.querySelectorAll('.slide');
-            let currentSlide = 0;
-
-            setInterval(() => {
-                slides[currentSlide].classList.remove('active');
-                currentSlide = (currentSlide + 1) % slides.length;
-                slides[currentSlide].classList.add('active');
-            }, 3500);
-        }
-
-        // حفظ وقراءة رسائل الشلة المجهولة
-        function sendAnonMessage() {
-            const msgText = document.getElementById('anon-input').value;
-            if (!msgText.trim()) return;
-
-            let savedMsgs = JSON.parse(localStorage.getItem('judi_anon_msgs') || '[]');
-            savedMsgs.push(msgText);
-            localStorage.setItem('judi_anon_msgs', JSON.stringify(savedMsgs));
-
-            document.getElementById('anon-input').value = '';
-            alert('تمت إضافة رسالتك بنجاح! 🎉');
-            loadSavedMessages();
-        }
-
-        function loadSavedMessages() {
-            let savedMsgs = JSON.parse(localStorage.getItem('judi_anon_msgs') || '[]');
-            const listContainer = document.getElementById('messages-list');
-            
-            // إضافة الرسائل المحفوظة
-            savedMsgs.forEach((msg, index) => {
-                const card = document.createElement('div');
-                card.className = 'anonymous-card';
-                card.innerHTML = `<b>👤 شخص مجهول (${index + 3}):</b><br>${msg}`;
-                listContainer.appendChild(card);
-            });
         }
     </script>
 </body>
