@@ -3,199 +3,364 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Judy! 🎉</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <title>Happy Birthday Judy! 🎉✨</title>
+    <!-- الخطوط والأيقونات -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        /* =========================================================
+           1. المتغيرات والتنسيقات الأساسية (CSS Variables & Resets)
+           ========================================================= */
         :root {
-            --primary: #0f172a;
-            --accent: #e11d48;
-            --card-bg: rgba(255, 255, 255, 0.96);
-            --text: #1e293b;
+            --primary-dark: #090d16;
+            --secondary-dark: #111827;
+            --accent-red: #e11d48;
+            --accent-pink: #f43f5e;
+            --accent-glow: rgba(225, 29, 72, 0.4);
+            --card-bg-light: rgba(255, 255, 255, 0.96);
+            --card-bg-glass: rgba(255, 255, 255, 0.85);
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-glow: rgba(244, 63, 94, 0.3);
+            --radius-large: 24px;
+            --radius-medium: 16px;
+            --font-family: 'Cairo', sans-serif;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-family);
+            -webkit-tap-highlight-color: transparent;
+        }
 
         body {
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311026 100%);
-            color: var(--text);
+            background: radial-gradient(circle at center, #1e1b4b 0%, #0f172a 60%, #090d16 100%);
+            color: var(--text-dark);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 15px;
+            padding: 20px 15px;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* 1. شاشة الباسورد المقسمة */
+        /* خلفية النجوم والتأثيرات المتحركة */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .main-wrapper {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* =========================================================
+           2. شاشة الباسورد المقسمة (Split Lock Screen)
+           ========================================================= */
         #lock-screen {
             width: 100%;
-            max-width: 780px;
-            background: var(--card-bg);
-            border-radius: 24px;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+            max-width: 820px;
+            background: var(--card-bg-light);
+            border-radius: var(--radius-large);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7), 0 0 30px var(--accent-glow);
             overflow: hidden;
             display: flex;
             flex-direction: row-reverse;
-            animation: zoomIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: lockScreenAppear 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid var(--border-glow);
         }
 
         @media (max-width: 768px) {
             #lock-screen {
                 flex-direction: column;
-                max-width: 400px;
+                max-width: 420px;
             }
         }
 
         .lock-img-side {
-            flex: 1;
+            flex: 1.1;
             background: #000;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 280px;
+            min-height: 320px;
+            position: relative;
+            overflow: hidden;
         }
+
         .lock-img-side img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .lock-img-side:hover img {
+            transform: scale(1.05);
+        }
+
+        .lock-img-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
         }
 
         .lock-form-side {
             flex: 1;
-            padding: 40px 30px;
+            padding: 45px 35px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
+            background: var(--card-bg-light);
         }
 
-        .lock-form-side h2 { color: var(--primary); font-size: 1.5rem; margin-bottom: 8px; font-weight: 900; }
-        .lock-form-side p { color: #64748b; font-size: 0.9rem; margin-bottom: 20px; }
-        
-        .password-input {
-            width: 100%;
-            padding: 14px;
-            border: 2px solid #cbd5e1;
-            border-radius: 14px;
-            font-size: 1.2rem;
-            text-align: center;
-            outline: none;
-            letter-spacing: 3px;
-            transition: 0.3s;
-        }
-        .password-input:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(225, 29, 72, 0.2); }
-
-        .btn-main {
-            background: linear-gradient(135deg, #e11d48, #be123c);
-            color: #fff;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 14px;
-            font-weight: 800;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            margin-top: 18px;
-            box-shadow: 0 10px 20px rgba(225, 29, 72, 0.3);
-            display: inline-flex;
+        .lock-icon-wrapper {
+            width: 65px;
+            height: 65px;
+            background: rgba(225, 29, 72, 0.1);
+            border-radius: 50%;
+            display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            margin-bottom: 15px;
+            color: var(--accent-red);
+            font-size: 1.8rem;
+            animation: pulseGlow 2s infinite;
         }
-        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(225, 29, 72, 0.4); }
 
-        .creator-tag {
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: #64748b;
-            font-weight: 600;
-        }
-        .creator-tag span {
-            color: var(--accent);
-            font-family: monospace;
-            font-size: 1.1rem;
+        .lock-form-side h2 {
+            color: var(--primary-dark);
+            font-size: 1.6rem;
+            margin-bottom: 8px;
             font-weight: 900;
         }
 
-        /* 2. الصفحات والسكاشن المنسابة */
+        .lock-form-side p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .password-box {
+            width: 100%;
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #cbd5e1;
+            border-radius: var(--radius-medium);
+            font-size: 1.25rem;
+            text-align: center;
+            outline: none;
+            letter-spacing: 4px;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+
+        .password-input:focus {
+            border-color: var(--accent-red);
+            background: #fff;
+            box-shadow: 0 0 20px rgba(225, 29, 72, 0.2);
+        }
+
+        /* =========================================================
+           3. الأزرار والتأثيرات التفاعلية (Buttons & Animations)
+           ========================================================= */
+        .btn-action {
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-pink));
+            color: #ffffff;
+            border: none;
+            padding: 15px 32px;
+            border-radius: var(--radius-medium);
+            font-weight: 800;
+            font-size: 1.15rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+            box-shadow: 0 10px 25px var(--accent-glow);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-action::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-action:hover::before {
+            left: 100%;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 15px 30px rgba(225, 29, 72, 0.5);
+        }
+
+        .btn-action:active {
+            transform: translateY(1px);
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.9rem;
+            margin-top: 12px;
+            display: none;
+            font-weight: 700;
+            animation: shake 0.4s ease;
+        }
+
+        .developer-signature {
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .developer-signature span {
+            color: var(--accent-red);
+            font-family: monospace;
+            font-size: 1.15rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        /* =========================================================
+           4. محتوى الصفحات والمجموعات (Main Pages Layout)
+           ========================================================= */
         .page-container {
             display: none;
             width: 100%;
-            max-width: 600px;
+            max-width: 650px;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
-            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            gap: 22px;
+            animation: slideUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .birthday-header {
             width: 100%;
             text-align: center;
-            background: var(--card-bg);
-            padding: 22px;
-            border-radius: 20px;
+            background: var(--card-bg-light);
+            padding: 25px;
+            border-radius: var(--radius-large);
             box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            border: 1px solid var(--border-glow);
         }
-        .birthday-header h1 { color: var(--accent); font-size: 2.4rem; font-weight: 900; text-shadow: 0 2px 10px rgba(225,29,72,0.15); }
 
-        /* كارت الصورة التفاعلي (لأجدع صاحبة) */
+        .birthday-header h1 {
+            color: var(--accent-red);
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-shadow: 0 3px 12px rgba(225,29,72,0.2);
+            letter-spacing: 1px;
+        }
+
+        /* =========================================================
+           5. كارت الصورة والرسالة (Interactive Photo & Message Card)
+           ========================================================= */
         .photo-card {
             width: 100%;
-            background: var(--card-bg);
-            padding: 18px;
-            border-radius: 22px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            background: var(--card-bg-light);
+            padding: 20px;
+            border-radius: var(--radius-large);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.35s ease;
             border: 3px solid transparent;
         }
+
         .photo-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
+            transform: translateY(-6px);
+            border-color: var(--accent-red);
+            box-shadow: 0 25px 50px rgba(225, 29, 72, 0.3);
         }
 
         .photo-frame {
             width: 100%;
-            max-height: 420px;
-            border-radius: 16px;
+            max-height: 440px;
+            border-radius: var(--radius-medium);
             overflow: hidden;
             background: #000;
             display: flex;
             align-items: center;
             justify-content: center;
         }
+
         .photo-frame img {
             width: 100%;
             height: auto;
-            max-height: 420px;
+            max-height: 440px;
             object-fit: contain;
             display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .photo-card:hover .photo-frame img {
+            transform: scale(1.02);
         }
 
         .photo-caption {
-            margin-top: 14px;
-            font-size: 1.3rem;
+            margin-top: 16px;
+            font-size: 1.35rem;
             font-weight: 900;
-            color: var(--primary);
+            color: var(--primary-dark);
             display: flex;
             flex-direction: column;
             gap: 6px;
         }
 
-        /* صندوق الرسالة والانيميشن الخاص بيه */
+        .photo-caption small {
+            font-size: 0.95rem;
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+
+        /* صندوق الرسالة والانيميشن الخاص به */
         #message-container {
             display: none;
             width: 100%;
             opacity: 0;
-            transform: translateY(-20px);
-            transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateY(-25px);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+
         #message-container.show {
             display: block;
             opacity: 1;
@@ -203,38 +368,48 @@
         }
 
         .message-box {
-            background: var(--card-bg);
-            padding: 35px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            background: var(--card-bg-light);
+            padding: 38px 30px;
+            border-radius: var(--radius-large);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.4);
             text-align: right;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             line-height: 2.2;
             color: #334155;
-            border-right: 8px solid var(--accent);
+            border-right: 8px solid var(--accent-red);
             width: 100%;
+            position: relative;
         }
 
-        /* 3. معرض الصور الفخم للـ Next */
+        .message-box b {
+            color: var(--accent-red);
+            font-size: 1.25rem;
+        }
+
+        /* =========================================================
+           6. معرض الصور المتحرك للـ Next (Dynamic Image Gallery)
+           ========================================================= */
         .gallery-card {
             width: 100%;
-            background: var(--card-bg);
-            padding: 22px;
-            border-radius: 22px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            background: var(--card-bg-light);
+            padding: 24px;
+            border-radius: var(--radius-large);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.4);
             text-align: center;
+            border: 1px solid var(--border-glow);
         }
 
         .gallery-frame {
             width: 100%;
-            height: 420px;
-            border-radius: 16px;
+            height: 430px;
+            border-radius: var(--radius-medium);
             overflow: hidden;
             background: #000;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
         }
 
         .gallery-frame img {
@@ -242,26 +417,371 @@
             height: 100%;
             object-fit: contain;
             display: block;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 1;
-            transform: scale(1);
+            transform: scale(1) rotate(0deg);
         }
 
+        /* التأثير الفخم عند النقر والتنقل بين الصور */
         .gallery-frame img.effect-hide {
             opacity: 0;
-            transform: scale(0.92) rotate(-1deg);
+            transform: scale(0.9) rotate(-2deg);
         }
 
         .gallery-controls {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 18px;
+            margin-top: 20px;
             gap: 15px;
         }
 
         .nav-btn {
-            background: var(--primary);
+            background: var(--primary-dark);
             color: #fff;
             border: none;
-            padding
+            padding: 12px 24px;
+            border-radius: var(--radius-medium);
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.4);
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-red);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px var(--accent-glow);
+        }
+
+        .counter-badge {
+            font-weight: 900;
+            font-size: 1.15rem;
+            color: var(--primary-dark);
+            background: rgba(225, 29, 72, 0.1);
+            padding: 8px 18px;
+            border-radius: 30px;
+            border: 1px solid rgba(225, 29, 72, 0.2);
+        }
+
+        /* =========================================================
+           7. التذييل (Footer)
+           ========================================================= */
+        footer {
+            margin-top: 35px;
+            text-align: center;
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+            line-height: 1.7;
+            position: relative;
+            z-index: 2;
+        }
+
+        footer .sig {
+            font-family: monospace;
+            font-weight: 900;
+            color: var(--accent-pink);
+            font-size: 1.35rem;
+            letter-spacing: 2px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        /* =========================================================
+           8. الرسومات والانيميشن التفصيلية (Keyframes)
+           ========================================================= */
+        @keyframes lockScreenAppear {
+            from { opacity: 0; transform: scale(0.88) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(35px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.4); }
+            70% { box-shadow: 0 0 0 18px rgba(225, 29, 72, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- خلفية جزيئات النجوم المضيئة -->
+    <canvas id="particles-canvas"></canvas>
+
+    <div class="main-wrapper">
+
+        <!-- =========================================================
+             1. شاشة الدخول والباسورد (Password Lock Screen)
+             ========================================================= -->
+        <div id="lock-screen">
+            <div class="lock-img-side">
+                <img src="b1.jpg" alt="Judy Photo" onerror="this.src='https://via.placeholder.com/400x500?text=b1.jpg'">
+                <div class="lock-img-overlay"></div>
+            </div>
+            
+            <div class="lock-form-side">
+                <div class="lock-icon-wrapper">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h2>مفتاح الدخول 🔐</h2>
+                <p>أدخلي تاريخ الميلاد الخاص بكِ للمتابعة ورؤية الهدية:</p>
+                
+                <div class="password-box">
+                    <input type="password" id="pass-input" class="password-input" placeholder="********" maxlength="8">
+                </div>
+                
+                <button class="btn-action" onclick="checkPassword()">
+                    <span>فتح الهدية</span>
+                    <i class="fas fa-sparkles"></i>
+                </button>
+                
+                <p id="pass-error" class="error-message">
+                    <i class="fas fa-exclamation-circle"></i> كلمة المرور غير صحيحة!
+                </p>
+                
+                <div class="developer-signature">
+                    تصميم وتطوير: <span>jou</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- =========================================================
+             2. الشاشة الأولى (الصورة وبزرار الضغط تنزل الرسالة)
+             ========================================================= -->
+        <div id="page-message" class="page-container">
+            <div class="birthday-header">
+                <h1>Happy Birthday Judy! 🎂🎉</h1>
+            </div>
+
+            <!-- كارت الصورة التفاعلي -->
+            <div class="photo-card" onclick="revealMessage()">
+                <div class="photo-frame">
+                    <img src="b1.jpg" alt="Judy Photo" onerror="this.src='https://via.placeholder.com/600x400?text=b1.jpg'">
+                </div>
+                <div class="photo-caption">
+                    <span>لأجدع صاحبة 👑</span>
+                    <small>(اضغطي هنا لرؤية الرسالة المفاجأة ✨)</small>
+                </div>
+            </div>
+
+            <!-- الرسالة الطويلة بالعامية المصرية -->
+            <div id="message-container">
+                <div class="message-box">
+                    <b>كل سنة وأنتي طيبة يا جودي! 🤍✨</b><br><br>
+                    النهارده مش أي يوم وخلاص، ده عيد ميلاد الشخصية اللي بجد غالية أوي وملازمنا في كل ضحكة وموقف. الواحد ساعات بيحتار يقول إيه ولا إيه، بس الحق ينقال أنتي مش مجرد صاحبة عادية بالنسبة لنا، أنتي الأخت اللي بجد بجد الواحد يفتخر إنه يعرفها ويطمن وهي جنبه.<br><br>
+                    طول عمرك جدعة ومعدنك أصيل ونظيف، ومستحيل في يوم الواحد يشك في جدعنتك ولا يقلق من ناحيتك لأنك بتثبتي في كل موقف صغيرة وكبيرة إنك سند حقيقي وقد المسؤولية وزيادة. وجودك بيفرق كتير في أي مكان بتبقي فيه، ودايماً ضحكتك وطاقتك بتبسط الكل.<br><br>
+                    يا رب تكون سنة جديدة سعيدة عليكي، مليانة فرح وراحة بال، وتشوف فيها كل النجاح والتوفيق وتحققي كل اللي نفسك فيه وتفضلي دايماً منورة حياتنا ومكسرة الدنيا! 🚀❤️<br><br>
+                    <div style="text-align: center; margin-top: 20px; font-weight: 900; font-size: 1.45rem; color: var(--accent-red);">
+                        كل سنة وأنتي معانا يا جودي! 🎂✨
+                    </div>
+                </div>
+
+                <!-- زرار Next للانتقال لمعرض الصور -->
+                <button class="btn-action" onclick="goToGallery()" style="width: auto; padding: 16px 50px; font-size: 1.25rem; margin: 25px auto 0;">
+                    <span>Next ✨</span>
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- =========================================================
+             3. معرض الصور الفخم للتنقل (Gallery Section)
+             ========================================================= -->
+        <div id="page-gallery" class="page-container">
+            <div class="birthday-header">
+                <h1>أجمل الذكريات 📸✨</h1>
+            </div>
+
+            <div class="gallery-card">
+                <div class="gallery-frame">
+                    <img id="gallery-img" src="b1.jpg" alt="Judy Gallery" onerror="this.src='https://via.placeholder.com/600x400?text=Upload+b2.jpg+b3.jpg...'">
+                </div>
+                
+                <div class="gallery-controls">
+                    <button class="nav-btn" onclick="changeImage(-1)">
+                        <i class="fas fa-chevron-right"></i> السابق
+                    </button>
+                    
+                    <span id="img-counter" class="counter-badge">1 / 20</span>
+                    
+                    <button class="nav-btn" onclick="changeImage(1)">
+                        التالي <i class="fas fa-chevron-left"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button class="btn-action" onclick="backToMessage()" style="width: auto; padding: 12px 32px; background: #475569; margin: 0 auto; box-shadow: none;">
+                <i class="fas fa-undo"></i>
+                <span>العودة للرسالة</span>
+            </button>
+        </div>
+
+    </div>
+
+    <footer>
+        صنع باهتمام وعزيمة بواسطة<br>
+        <span class="sig">jou</span>
+    </footer>
+
+    <!-- =========================================================
+         4. السكربتات البرمجية والتحكم (JavaScript Logic)
+         ========================================================= -->
+    <script>
+        /* قائمة الصور المجهزة (تمتد حتى 20 صورة b1.jpg إلى b20.jpg) */
+        const images = [
+            "b1.jpg", "b2.jpg", "b3.jpg", "b4.jpg", "b5.jpg",
+            "b6.jpg", "b7.jpg", "b8.jpg", "b9.jpg", "b10.jpg",
+            "b11.jpg", "b12.jpg", "b13.jpg", "b14.jpg", "b15.jpg",
+            "b16.jpg", "b17.jpg", "b18.jpg", "b19.jpg", "b20.jpg"
+        ];
+        
+        let currentImgIndex = 0;
+
+        /* التحقق من كلمة المرور */
+        function checkPassword() {
+            const inputVal = document.getElementById('pass-input').value;
+            const correctPass = "25122008";
+
+            if (inputVal === correctPass) {
+                document.getElementById('lock-screen').style.display = 'none';
+                document.getElementById('page-message').style.display = 'flex';
+                preloadImages();
+            } else {
+                const err = document.getElementById('pass-error');
+                err.style.display = 'block';
+                setTimeout(() => { err.style.display = 'none'; }, 2200);
+            }
+        }
+
+        /* السماح بإدخال الباسورد عند الضغط على Enter */
+        document.getElementById('pass-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        /* إظهار الرسالة بالضغط على الصورة */
+        function revealMessage() {
+            const msgContainer = document.getElementById('message-container');
+            msgContainer.classList.add('show');
+            msgContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        /* الانتقال لمعرض الصور */
+        function goToGallery() {
+            document.getElementById('page-message').style.display = 'none';
+            document.getElementById('page-gallery').style.display = 'flex';
+            updateGalleryImage();
+        }
+
+        /* العودة لصفحة الرسالة */
+        function backToMessage() {
+            document.getElementById('page-gallery').style.display = 'none';
+            document.getElementById('page-message').style.display = 'flex';
+        }
+
+        /* تغيير الصور مع تطبيق تأثير الاختفاء والانكماش السحري */
+        function changeImage(direction) {
+            const imgElement = document.getElementById('gallery-img');
+            
+            imgElement.classList.add('effect-hide');
+
+            setTimeout(() => {
+                currentImgIndex = (currentImgIndex + direction + images.length) % images.length;
+                imgElement.src = images[currentImgIndex];
+                document.getElementById('img-counter').innerText = `${currentImgIndex + 1} / ${images.length}`;
+                imgElement.classList.remove('effect-hide');
+            }, 300);
+        }
+
+        function updateGalleryImage() {
+            document.getElementById('gallery-img').src = images[currentImgIndex];
+            document.getElementById('img-counter').innerText = `${currentImgIndex + 1} / ${images.length}`;
+        }
+
+        /* التحميل المسبق للصور لتسريع الاستجابة */
+        function preloadImages() {
+            images.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        }
+
+        /* =========================================================
+           5. إنشاء النجوم المتحركة في خلفية Canvas
+           ========================================================= */
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particlesArray = [];
+        const numberOfParticles = 45;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 0.8 - 0.4;
+                this.speedY = Math.random() * 0.8 - 0.4;
+                this.color = `rgba(244, 63, 94, ${Math.random() * 0.6 + 0.2})`;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+    </script>
+</body>
+</html>
