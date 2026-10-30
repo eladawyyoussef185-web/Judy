@@ -28,7 +28,7 @@
             overflow-x: hidden;
         }
 
-        /* شاشة الباسورد المقسمة الفخمة */
+        /* 1. شاشة الباسورد المقسمة */
         #lock-screen {
             width: 100%;
             max-width: 780px;
@@ -122,7 +122,7 @@
             font-weight: 900;
         }
 
-        /* الصفحات المتحركة بعد الباسورد */
+        /* 2. الصفحات والسكاشن المنسابة */
         .page-container {
             display: none;
             width: 100%;
@@ -143,6 +143,65 @@
         }
         .birthday-header h1 { color: var(--accent); font-size: 2.4rem; font-weight: 900; text-shadow: 0 2px 10px rgba(225,29,72,0.15); }
 
+        /* كارت الصورة التفاعلي (لأجدع صاحبة) */
+        .photo-card {
+            width: 100%;
+            background: var(--card-bg);
+            padding: 18px;
+            border-radius: 22px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+        .photo-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .photo-frame {
+            width: 100%;
+            max-height: 420px;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .photo-frame img {
+            width: 100%;
+            height: auto;
+            max-height: 420px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .photo-caption {
+            margin-top: 14px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--primary);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        /* صندوق الرسالة والانيميشن الخاص بيه */
+        #message-container {
+            display: none;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        #message-container.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .message-box {
             background: var(--card-bg);
             padding: 35px;
@@ -156,7 +215,7 @@
             width: 100%;
         }
 
-        /* معرض الصور الفخم */
+        /* 3. معرض الصور الفخم للـ Next */
         .gallery-card {
             width: 100%;
             background: var(--card-bg);
@@ -176,7 +235,6 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
         }
 
         .gallery-frame img {
@@ -184,15 +242,14 @@
             height: 100%;
             object-fit: contain;
             display: block;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 1;
             transform: scale(1);
         }
 
-        /* تأثير سحري عند تقليب الصور */
         .gallery-frame img.effect-hide {
             opacity: 0;
-            transform: scale(0.9) rotate(-2deg);
+            transform: scale(0.92) rotate(-1deg);
         }
 
         .gallery-controls {
@@ -207,169 +264,4 @@
             background: var(--primary);
             color: #fff;
             border: none;
-            padding: 12px 22px;
-            border-radius: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(15, 23, 42,.3);
-        }
-        .nav-btn:hover { background: var(--accent); transform: translateY(-2px); }
-
-        footer {
-            margin-top: 30px;
-            text-align: center;
-            font-size: 0.95rem;
-            color: #cbd5e1;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
-            line-height: 1.6;
-        }
-        footer .sig {
-            font-family: monospace;
-            font-weight: 900;
-            color: #fb7185;
-            font-size: 1.3rem;
-            letter-spacing: 2px;
-        }
-
-        @keyframes zoomIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- 1. شاشة الباسورد -->
-    <div id="lock-screen">
-        <div class="lock-img-side">
-            <img src="b1.jpg" alt="Judy Photo" onerror="this.src='https://via.placeholder.com/400x500?text=b1.jpg'">
-        </div>
-        <div class="lock-form-side">
-            <i class="fas fa-lock" style="font-size: 2.2rem; color: var(--accent); margin-bottom: 15px;"></i>
-            <h2>مفتاح الدخول 🔐</h2>
-            <p>أدخلي تاريخ الميلاد للمتابعة:</p>
-            <input type="password" id="pass-input" class="password-input" placeholder="********" maxlength="8">
-            <button class="btn-main" onclick="checkPassword()">فتح الهدية ✨</button>
-            <p id="pass-error" style="color: #ef4444; font-size: 0.85rem; margin-top: 10px; display: none; font-weight: 700;">كلمة المرور غير صحيحة!</p>
-            <div class="creator-tag">
-                تصميم وتنيذ: <span>jou</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- 2. صفحة الرسالة الطويلة مع زرار Next فخم -->
-    <div id="page-message" class="page-container">
-        <div class="birthday-header">
-            <h1>Happy Birthday Judy! 🎂🎉</h1>
-        </div>
-
-        <div class="message-box">
-            <b>كل سنة وأنتي طيبة يا جودي! 🤍✨</b><br><br>
-            النهارده مش أي يوم وخلاص، ده عيد ميلاد الشخصية اللي بجد غالية أوي وملازمنا في كل ضحكة وموقف. الواحد ساعات بيحتار يقول إيه ولا إيه، بس الحق ينقال أنتي مش مجرد صاحبة عادية بالنسبة لنا، أنتي الأخت اللي بجد بجد الواحد يفتخر إنه يعرفها ويطمن وهي جنبه.<br><br>
-            طول عمرك جدعة ومعدنك أصيل ونظيف، ومستحيل في يوم الواحد يشك في جدعنتك ولا يقلق من ناحيتك لأنك بتثبتي في كل موقف صغيرة وكبيرة إنك سند حقيقي وقد المسؤولية وزيادة. وجودك بيفرق كتير في أي مكان بتبقي فيه، ودايماً ضحكتك وطاقتك بتبسط الكل.<br><br>
-            يا رب تكون سنة جديدة سعيدة عليكي، مليانة فرح وراحة بال، وتشوف فيها كل النجاح والتوفيق وتحققي كل اللي نفسك فيه وتفضلي دايماً منورة حياتنا ومكسرة الدنيا! 🚀❤️<br><br>
-            <div style="text-align: center; margin-top: 20px; font-weight: 900; font-size: 1.4rem; color: var(--accent);">
-                كل سنة وأنتي معانا يا جودي! 🎂✨
-            </div>
-        </div>
-
-        <button class="btn-main" onclick="goToGallery()" style="width: auto; padding: 15px 45px; font-size: 1.2rem; margin: 0 auto;">
-            Next ✨
-        </button>
-    </div>
-
-    <!-- 3. صفحة معرض الصور بتأثيرات الحركة -->
-    <div id="page-gallery" class="page-container">
-        <div class="birthday-header">
-            <h1>أجمل الذكريات 📸✨</h1>
-        </div>
-
-        <div class="gallery-card">
-            <div class="gallery-frame">
-                <img id="gallery-img" src="b1.jpg" alt="Judy Gallery" onerror="this.src='https://via.placeholder.com/600x400?text=Upload+More+Images'">
-            </div>
-            
-            <div class="gallery-controls">
-                <button class="nav-btn" onclick="changeImage(-1)">⬅️ السابق</button>
-                <span id="img-counter" style="font-weight:900; font-size: 1.1rem; color: var(--primary);">1 / 5</span>
-                <button class="nav-btn" onclick="changeImage(1)">التالي ➡️</button>
-            </div>
-        </div>
-
-        <button class="btn-main" onclick="backToMessage()" style="width: auto; padding: 12px 30px; background: #475569; margin: 0 auto; box-shadow: none;">
-            ⬅️ العودة للرسالة
-        </button>
-    </div>
-
-    <footer>
-        صنع باهتمام وعزيمة بواسطة<br>
-        <span class="sig">jou</span>
-    </footer>
-
-    <script>
-        // هنا قائمة أسماء الصور (تقدر تحط صور براحتك: b1.jpg, b2.jpg, b3.jpg, b4.jpg, b5.jpg ... إلخ)
-        const images = ["b1.jpg", "b2.jpg", "b3.jpg", "b4.jpg", "b5.jpg"];
-        let currentImgIndex = 0;
-
-        function checkPassword() {
-            const inputVal = document.getElementById('pass-input').value;
-            const correctPass = "25122008";
-
-            if (inputVal === correctPass) {
-                document.getElementById('lock-screen').style.display = 'none';
-                document.getElementById('page-message').style.display = 'flex';
-                preloadImages();
-            } else {
-                const err = document.getElementById('pass-error');
-                err.style.display = 'block';
-                setTimeout(() => { err.style.display = 'none'; }, 2000);
-            }
-        }
-
-        function goToGallery() {
-            document.getElementById('page-message').style.display = 'none';
-            document.getElementById('page-gallery').style.display = 'flex';
-            updateGalleryImage();
-        }
-
-        function backToMessage() {
-            document.getElementById('page-gallery').style.display = 'none';
-            document.getElementById('page-message').style.display = 'flex';
-        }
-
-        function changeImage(direction) {
-            const imgElement = document.getElementById('gallery-img');
-            
-            // تشغيل تأثير الاختفاء والانكماش الأنيق
-            imgElement.classList.add('effect-hide');
-
-            setTimeout(() => {
-                currentImgIndex = (currentImgIndex + direction + images.length) % images.length;
-                imgElement.src = images[currentImgIndex];
-                document.getElementById('img-counter').innerText = `${currentImgIndex + 1} / ${images.length}`;
-                
-                // إزالة التأثير لتظهر الصورة الجديدة بفخامة
-                imgElement.classList.remove('effect-hide');
-            }, 300);
-        }
-
-        function updateGalleryImage() {
-            document.getElementById('gallery-img').src = images[currentImgIndex];
-            document.getElementById('img-counter').innerText = `${currentImgIndex + 1} / ${images.length}`;
-        }
-
-        function preloadImages() {
-            images.forEach(src => {
-                const img = new Image();
-                img.src = src;
-            });
-        }
-    </script>
-</body>
-</html>
+            padding
