@@ -120,7 +120,7 @@
         }
 
         /* المحتوى الأساسي بعد الباسورد */
-        .content-section {
+        #main-content {
             display: none;
             width: 100%;
             max-width: 550px;
@@ -153,7 +153,7 @@
             width: 100%;
         }
 
-        /* قسم الصور (Gallery) */
+        /* قسم الصور المتعددة مع تأثير الانتقال */
         .gallery-card {
             width: 100%;
             background: var(--card-bg);
@@ -172,6 +172,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
         }
 
         .gallery-frame img {
@@ -179,6 +180,14 @@
             height: 100%;
             object-fit: contain;
             display: block;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            opacity: 1;
+        }
+
+        /* تأثير الحركة أثناء تغيير الصورة */
+        .gallery-frame img.fade-out {
+            opacity: 0;
+            transform: scale(0.95);
         }
 
         .gallery-controls {
@@ -199,7 +208,7 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        .nav-btn:hover { background: var(--accent); }
+        .nav-btn:hover { background: var(--accent); transform: scale(1.05); }
 
         footer {
             margin-top: 25px;
@@ -243,12 +252,14 @@
         </div>
     </div>
 
-    <!-- 2. صفحة الرسالة الطويلة -->
-    <div id="page-message" class="content-section">
+    <!-- 2. المحتوى بعد الباسورد (الرسالة والذكريات) -->
+    <div id="main-content">
+        
         <div class="birthday-header">
             <h1>Happy Birthday Judy! 🎂🎉</h1>
         </div>
 
+        <!-- الرسالة الطويلة بالعامية المصرية -->
         <div class="message-box">
             <b>كل سنة وأنتي طيبة يا جودي! 🤍✨</b><br><br>
             النهارده مش أي يوم وخلاص، ده عيد ميلاد الشخصية اللي بجد غالية أوي وملازمنا في كل ضحكة وموقف. الواحد ساعات بيحتار يقول إيه ولا إيه، بس الحق ينقال أنتي مش مجرد صاحبة عادية بالنسبة لنا، أنتي الأخت اللي بجد بجد الواحد يفتخر إنه يعرفها ويطمن وهي جنبه.<br><br>
@@ -259,32 +270,19 @@
             </div>
         </div>
 
-        <button class="btn" onclick="showGallery()" style="width: auto; padding: 14px 35px; font-size: 1.1rem;">
-            التالي ➡️
-        </button>
-    </div>
-
-    <!-- 3. صفحة معرض الصور (Next Page) -->
-    <div id="page-gallery" class="content-section">
-        <div class="birthday-header">
-            <h1>أجمل الذكريات 📸✨</h1>
-        </div>
-
+        <!-- معرض الصور مع تأثيرات الانتقال (تقدر تحط صور لحد b10.jpg) -->
         <div class="gallery-card">
             <div class="gallery-frame">
-                <img id="gallery-img" src="b1.jpg" alt="Judy Gallery" onerror="this.src='https://via.placeholder.com/600x400?text=Upload+Images'">
+                <img id="gallery-img" src="b1.jpg" alt="Judy Gallery" onerror="this.src='https://via.placeholder.com/600x400?text=Upload+b2.jpg+b3.jpg...'">
             </div>
             
             <div class="gallery-controls">
-                <button class="nav-btn" onclick="prevImage()">السابق ⬅️</button>
-                <span id="img-counter" style="font-weight:700; color:var(--primary);">1 / 3</span>
-                <button class="nav-btn" onclick="nextImage()">التالي ➡️</button>
+                <button class="nav-btn" onclick="changeImage(-1)">السابق ⬅️</button>
+                <span id="img-counter" style="font-weight:700; color:var(--primary);">1 / 5</span>
+                <button class="nav-btn" onclick="changeImage(1)">التالي ➡️</button>
             </div>
         </div>
 
-        <button class="btn" onclick="showMessagePage()" style="width: auto; background:#475569; margin-top:10px;">
-            ⬅️ العودة للرسالة
-        </button>
     </div>
 
     <footer>
@@ -293,8 +291,8 @@
     </footer>
 
     <script>
-        // قائمة أسماء الصور (تقدر ترفع b1.jpg و b2.jpg و b3.jpg في جيت هب)
-        const images = ["b1.jpg", "b2.jpg", "b3.jpg"];
+        // هنا بتقدر تضيف أسماء الصور براحتك (مثلاً b1.jpg, b2.jpg, b3.jpg ... لحد العدد اللي تحبه)
+        const images = ["b1.jpg", "b2.jpg", "b3.jpg", "b4.jpg", "b5.jpg"];
         let currentImgIndex = 0;
 
         function checkPassword() {
@@ -303,7 +301,8 @@
 
             if (inputVal === correctPass) {
                 document.getElementById('lock-screen').style.display = 'none';
-                document.getElementById('page-message').style.display = 'flex';
+                document.getElementById('main-content').style.display = 'flex';
+                updateGallery();
             } else {
                 const err = document.getElementById('pass-error');
                 err.style.display = 'block';
@@ -311,30 +310,25 @@
             }
         }
 
-        function showGallery() {
-            document.getElementById('page-message').style.display = 'none';
-            document.getElementById('page-gallery').style.display = 'flex';
-            updateGallery();
-        }
+        function changeImage(direction) {
+            const imgElement = document.getElementById('gallery-img');
+            
+            // تطبيق تأثير الاختفاء والانكماش البسيط
+            imgElement.classList.add('fade-out');
 
-        function showMessagePage() {
-            document.getElementById('page-gallery').style.display = 'none';
-            document.getElementById('page-message').style.display = 'flex';
+            setTimeout(() => {
+                currentImgIndex = (currentImgIndex + direction + images.length) % images.length;
+                imgElement.src = images[currentImgIndex];
+                document.getElementById('img-counter').innerText = `${currentImgIndex + 1} / ${images.length}`;
+                
+                // إرجاع الصورة لتظهر بوضوح بتأثير سحري
+                imgElement.classList.remove('fade-out');
+            }, 300);
         }
 
         function updateGallery() {
             document.getElementById('gallery-img').src = images[currentImgIndex];
             document.getElementById('img-counter').innerText = `${currentImgIndex + 1} / ${images.length}`;
-        }
-
-        function nextImage() {
-            currentImgIndex = (currentImgIndex + 1) % images.length;
-            updateGallery();
-        }
-
-        function prevImage() {
-            currentImgIndex = (currentImgIndex - 1 + images.length) % images.length;
-            updateGallery();
         }
     </script>
 </body>
