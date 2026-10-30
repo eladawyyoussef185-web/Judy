@@ -10,14 +10,14 @@
         :root {
             --primary: #0f172a;
             --accent: #e11d48;
-            --card-bg: rgba(255, 255, 255, 0.95);
+            --card-bg: rgba(255, 255, 255, 0.96);
             --text: #1e293b;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
 
         body {
-            background-color: #0b0f19;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311026 100%);
             color: var(--text);
             min-height: 100vh;
             display: flex;
@@ -25,19 +25,20 @@
             align-items: center;
             justify-content: center;
             padding: 15px;
+            overflow-x: hidden;
         }
 
-        /* شاشة الباسورد المقسمة */
+        /* شاشة الباسورد المقسمة الفخمة */
         #lock-screen {
             width: 100%;
-            max-width: 750px;
+            max-width: 780px;
             background: var(--card-bg);
             border-radius: 24px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.6);
             overflow: hidden;
             display: flex;
             flex-direction: row-reverse;
-            animation: fadeIn 0.5s ease;
+            animation: zoomIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         @media (max-width: 768px) {
@@ -64,7 +65,7 @@
 
         .lock-form-side {
             flex: 1;
-            padding: 35px 25px;
+            padding: 40px 30px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -72,107 +73,110 @@
             text-align: center;
         }
 
-        .lock-form-side h2 { color: var(--primary); font-size: 1.4rem; margin-bottom: 8px; }
-        .lock-form-side p { color: #64748b; font-size: 0.85rem; margin-bottom: 20px; }
+        .lock-form-side h2 { color: var(--primary); font-size: 1.5rem; margin-bottom: 8px; font-weight: 900; }
+        .lock-form-side p { color: #64748b; font-size: 0.9rem; margin-bottom: 20px; }
         
         .password-input {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             border: 2px solid #cbd5e1;
-            border-radius: 12px;
-            font-size: 1.1rem;
+            border-radius: 14px;
+            font-size: 1.2rem;
             text-align: center;
             outline: none;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            transition: 0.3s;
         }
-        .password-input:focus { border-color: var(--accent); }
+        .password-input:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(225, 29, 72, 0.2); }
 
-        .btn {
-            background-color: var(--accent);
+        .btn-main {
+            background: linear-gradient(135deg, #e11d48, #be123c);
             color: #fff;
             border: none;
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 1rem;
+            padding: 14px 28px;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 1.1rem;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.3s ease;
             width: 100%;
-            margin-top: 15px;
+            margin-top: 18px;
+            box-shadow: 0 10px 20px rgba(225, 29, 72, 0.3);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
         }
-        .btn:hover { opacity: 0.9; transform: scale(1.02); }
+        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(225, 29, 72, 0.4); }
 
         .creator-tag {
-            margin-top: 15px;
-            font-size: 0.85rem;
-            color: #94a3b8;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #64748b;
             font-weight: 600;
         }
         .creator-tag span {
             color: var(--accent);
             font-family: monospace;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 900;
         }
 
-        /* المحتوى الأساسي بعد الباسورد */
-        #main-content {
+        /* الصفحات المتحركة بعد الباسورد */
+        .page-container {
             display: none;
             width: 100%;
-            max-width: 550px;
+            max-width: 600px;
             flex-direction: column;
             align-items: center;
             gap: 20px;
-            animation: fadeIn 0.6s ease;
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .birthday-header {
             width: 100%;
             text-align: center;
             background: var(--card-bg);
-            padding: 20px;
-            border-radius: 18px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            padding: 22px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
         }
-        .birthday-header h1 { color: var(--accent); font-size: 2.2rem; font-weight: 900; }
+        .birthday-header h1 { color: var(--accent); font-size: 2.4rem; font-weight: 900; text-shadow: 0 2px 10px rgba(225,29,72,0.15); }
 
         .message-box {
             background: var(--card-bg);
-            padding: 30px;
-            border-radius: 18px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
             text-align: right;
-            font-size: 1.05rem;
-            line-height: 2.1;
+            font-size: 1.1rem;
+            line-height: 2.2;
             color: #334155;
-            border-right: 6px solid var(--accent);
+            border-right: 8px solid var(--accent);
             width: 100%;
         }
 
-        /* قسم الصور المتعددة مع تأثير الانتقال */
+        /* معرض الصور الفخم */
         .gallery-card {
             width: 100%;
             background: var(--card-bg);
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+            padding: 22px;
+            border-radius: 22px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
             text-align: center;
         }
 
         .gallery-frame {
             width: 100%;
-            height: 380px;
-            border-radius: 14px;
+            height: 420px;
+            border-radius: 16px;
             overflow: hidden;
             background: #000;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
         }
 
         .gallery-frame img {
@@ -180,54 +184,61 @@
             height: 100%;
             object-fit: contain;
             display: block;
-            transition: opacity 0.4s ease, transform 0.4s ease;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 1;
+            transform: scale(1);
         }
 
-        /* تأثير الحركة أثناء تغيير الصورة */
-        .gallery-frame img.fade-out {
+        /* تأثير سحري عند تقليب الصور */
+        .gallery-frame img.effect-hide {
             opacity: 0;
-            transform: scale(0.95);
+            transform: scale(0.9) rotate(-2deg);
         }
 
         .gallery-controls {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 15px;
-            gap: 10px;
+            margin-top: 18px;
+            gap: 15px;
         }
 
         .nav-btn {
             background: var(--primary);
             color: #fff;
             border: none;
-            padding: 10px 18px;
-            border-radius: 10px;
+            padding: 12px 22px;
+            border-radius: 12px;
             font-weight: 700;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(15, 23, 42,.3);
         }
-        .nav-btn:hover { background: var(--accent); transform: scale(1.05); }
+        .nav-btn:hover { background: var(--accent); transform: translateY(-2px); }
 
         footer {
-            margin-top: 25px;
+            margin-top: 30px;
             text-align: center;
-            font-size: 0.9rem;
-            color: #fff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
             line-height: 1.6;
         }
         footer .sig {
             font-family: monospace;
             font-weight: 900;
-            color: #f43f5e;
-            font-size: 1.2rem;
+            color: #fb7185;
+            font-size: 1.3rem;
             letter-spacing: 2px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
@@ -240,49 +251,60 @@
             <img src="b1.jpg" alt="Judy Photo" onerror="this.src='https://via.placeholder.com/400x500?text=b1.jpg'">
         </div>
         <div class="lock-form-side">
-            <i class="fas fa-lock" style="font-size: 2rem; color: var(--accent); margin-bottom: 12px;"></i>
+            <i class="fas fa-lock" style="font-size: 2.2rem; color: var(--accent); margin-bottom: 15px;"></i>
             <h2>مفتاح الدخول 🔐</h2>
             <p>أدخلي تاريخ الميلاد للمتابعة:</p>
             <input type="password" id="pass-input" class="password-input" placeholder="********" maxlength="8">
-            <button class="btn" onclick="checkPassword()">فتح الهدية ✨</button>
-            <p id="pass-error" style="color: #ef4444; font-size: 0.8rem; margin-top: 8px; display: none;">كلمة المرور غير صحيحة!</p>
+            <button class="btn-main" onclick="checkPassword()">فتح الهدية ✨</button>
+            <p id="pass-error" style="color: #ef4444; font-size: 0.85rem; margin-top: 10px; display: none; font-weight: 700;">كلمة المرور غير صحيحة!</p>
             <div class="creator-tag">
-                بواسطة: <span>jou</span>
+                تصميم وتنيذ: <span>jou</span>
             </div>
         </div>
     </div>
 
-    <!-- 2. المحتوى بعد الباسورد (الرسالة والذكريات) -->
-    <div id="main-content">
-        
+    <!-- 2. صفحة الرسالة الطويلة مع زرار Next فخم -->
+    <div id="page-message" class="page-container">
         <div class="birthday-header">
             <h1>Happy Birthday Judy! 🎂🎉</h1>
         </div>
 
-        <!-- الرسالة الطويلة بالعامية المصرية -->
         <div class="message-box">
             <b>كل سنة وأنتي طيبة يا جودي! 🤍✨</b><br><br>
             النهارده مش أي يوم وخلاص، ده عيد ميلاد الشخصية اللي بجد غالية أوي وملازمنا في كل ضحكة وموقف. الواحد ساعات بيحتار يقول إيه ولا إيه، بس الحق ينقال أنتي مش مجرد صاحبة عادية بالنسبة لنا، أنتي الأخت اللي بجد بجد الواحد يفتخر إنه يعرفها ويطمن وهي جنبه.<br><br>
             طول عمرك جدعة ومعدنك أصيل ونظيف، ومستحيل في يوم الواحد يشك في جدعنتك ولا يقلق من ناحيتك لأنك بتثبتي في كل موقف صغيرة وكبيرة إنك سند حقيقي وقد المسؤولية وزيادة. وجودك بيفرق كتير في أي مكان بتبقي فيه، ودايماً ضحكتك وطاقتك بتبسط الكل.<br><br>
             يا رب تكون سنة جديدة سعيدة عليكي، مليانة فرح وراحة بال، وتشوف فيها كل النجاح والتوفيق وتحققي كل اللي نفسك فيه وتفضلي دايماً منورة حياتنا ومكسرة الدنيا! 🚀❤️<br><br>
-            <div style="text-align: center; margin-top: 15px; font-weight: 900; font-size: 1.3rem; color: var(--accent);">
+            <div style="text-align: center; margin-top: 20px; font-weight: 900; font-size: 1.4rem; color: var(--accent);">
                 كل سنة وأنتي معانا يا جودي! 🎂✨
             </div>
         </div>
 
-        <!-- معرض الصور مع تأثيرات الانتقال (تقدر تحط صور لحد b10.jpg) -->
+        <button class="btn-main" onclick="goToGallery()" style="width: auto; padding: 15px 45px; font-size: 1.2rem; margin: 0 auto;">
+            Next ✨
+        </button>
+    </div>
+
+    <!-- 3. صفحة معرض الصور بتأثيرات الحركة -->
+    <div id="page-gallery" class="page-container">
+        <div class="birthday-header">
+            <h1>أجمل الذكريات 📸✨</h1>
+        </div>
+
         <div class="gallery-card">
             <div class="gallery-frame">
-                <img id="gallery-img" src="b1.jpg" alt="Judy Gallery" onerror="this.src='https://via.placeholder.com/600x400?text=Upload+b2.jpg+b3.jpg...'">
+                <img id="gallery-img" src="b1.jpg" alt="Judy Gallery" onerror="this.src='https://via.placeholder.com/600x400?text=Upload+More+Images'">
             </div>
             
             <div class="gallery-controls">
-                <button class="nav-btn" onclick="changeImage(-1)">السابق ⬅️</button>
-                <span id="img-counter" style="font-weight:700; color:var(--primary);">1 / 5</span>
+                <button class="nav-btn" onclick="changeImage(-1)">⬅️ السابق</button>
+                <span id="img-counter" style="font-weight:900; font-size: 1.1rem; color: var(--primary);">1 / 5</span>
                 <button class="nav-btn" onclick="changeImage(1)">التالي ➡️</button>
             </div>
         </div>
 
+        <button class="btn-main" onclick="backToMessage()" style="width: auto; padding: 12px 30px; background: #475569; margin: 0 auto; box-shadow: none;">
+            ⬅️ العودة للرسالة
+        </button>
     </div>
 
     <footer>
@@ -291,7 +313,7 @@
     </footer>
 
     <script>
-        // هنا بتقدر تضيف أسماء الصور براحتك (مثلاً b1.jpg, b2.jpg, b3.jpg ... لحد العدد اللي تحبه)
+        // هنا قائمة أسماء الصور (تقدر تحط صور براحتك: b1.jpg, b2.jpg, b3.jpg, b4.jpg, b5.jpg ... إلخ)
         const images = ["b1.jpg", "b2.jpg", "b3.jpg", "b4.jpg", "b5.jpg"];
         let currentImgIndex = 0;
 
@@ -301,8 +323,8 @@
 
             if (inputVal === correctPass) {
                 document.getElementById('lock-screen').style.display = 'none';
-                document.getElementById('main-content').style.display = 'flex';
-                updateGallery();
+                document.getElementById('page-message').style.display = 'flex';
+                preloadImages();
             } else {
                 const err = document.getElementById('pass-error');
                 err.style.display = 'block';
@@ -310,25 +332,43 @@
             }
         }
 
+        function goToGallery() {
+            document.getElementById('page-message').style.display = 'none';
+            document.getElementById('page-gallery').style.display = 'flex';
+            updateGalleryImage();
+        }
+
+        function backToMessage() {
+            document.getElementById('page-gallery').style.display = 'none';
+            document.getElementById('page-message').style.display = 'flex';
+        }
+
         function changeImage(direction) {
             const imgElement = document.getElementById('gallery-img');
             
-            // تطبيق تأثير الاختفاء والانكماش البسيط
-            imgElement.classList.add('fade-out');
+            // تشغيل تأثير الاختفاء والانكماش الأنيق
+            imgElement.classList.add('effect-hide');
 
             setTimeout(() => {
                 currentImgIndex = (currentImgIndex + direction + images.length) % images.length;
                 imgElement.src = images[currentImgIndex];
                 document.getElementById('img-counter').innerText = `${currentImgIndex + 1} / ${images.length}`;
                 
-                // إرجاع الصورة لتظهر بوضوح بتأثير سحري
-                imgElement.classList.remove('fade-out');
+                // إزالة التأثير لتظهر الصورة الجديدة بفخامة
+                imgElement.classList.remove('effect-hide');
             }, 300);
         }
 
-        function updateGallery() {
+        function updateGalleryImage() {
             document.getElementById('gallery-img').src = images[currentImgIndex];
             document.getElementById('img-counter').innerText = `${currentImgIndex + 1} / ${images.length}`;
+        }
+
+        function preloadImages() {
+            images.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
         }
     </script>
 </body>
