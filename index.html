@@ -27,7 +27,7 @@
             padding: 15px;
         }
 
-        /* شاشة الباسورد المقسمة (نص صورة ونص خانة إدخال) */
+        /* شاشة الباسورد المقسمة */
         #lock-screen {
             width: 100%;
             max-width: 750px;
@@ -36,7 +36,7 @@
             box-shadow: 0 25px 50px rgba(0,0,0,0.5);
             overflow: hidden;
             display: flex;
-            flex-direction: row-reverse; /* الشمال واليمين مظبوطين */
+            flex-direction: row-reverse;
             animation: fadeIn 0.5s ease;
         }
 
@@ -91,7 +91,7 @@
             background-color: var(--accent);
             color: #fff;
             border: none;
-            padding: 12px;
+            padding: 12px 24px;
             border-radius: 12px;
             font-weight: 700;
             font-size: 1rem;
@@ -99,6 +99,10 @@
             transition: 0.2s;
             width: 100%;
             margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         .btn:hover { opacity: 0.9; transform: scale(1.02); }
 
@@ -116,7 +120,7 @@
         }
 
         /* المحتوى الأساسي بعد الباسورد */
-        #main-content {
+        .content-section {
             display: none;
             width: 100%;
             max-width: 550px;
@@ -136,65 +140,6 @@
         }
         .birthday-header h1 { color: var(--accent); font-size: 2.2rem; font-weight: 900; }
 
-        /* كارت الصورة التفاعلي */
-        .photo-card {
-            width: 100%;
-            background: var(--card-bg);
-            padding: 15px;
-            border-radius: 20px;
-            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 3px solid transparent;
-        }
-        .photo-card:hover {
-            transform: translateY(-5px) scale(1.01);
-            border-color: var(--accent);
-        }
-
-        .photo-frame {
-            width: 100%;
-            max-height: 450px;
-            border-radius: 14px;
-            overflow: hidden;
-            background: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .photo-frame img {
-            width: 100%;
-            height: auto;
-            max-height: 450px;
-            object-fit: contain;
-            display: block;
-        }
-
-        .photo-caption {
-            margin-top: 12px;
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: var(--primary);
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        /* صندوق الرسالة مع تأثير الظهور */
-        #message-container {
-            display: none;
-            width: 100%;
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        #message-container.show {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
         .message-box {
             background: var(--card-bg);
             padding: 30px;
@@ -205,7 +150,56 @@
             line-height: 2.1;
             color: #334155;
             border-right: 6px solid var(--accent);
+            width: 100%;
         }
+
+        /* قسم الصور (Gallery) */
+        .gallery-card {
+            width: 100%;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+
+        .gallery-frame {
+            width: 100%;
+            height: 380px;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .gallery-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .nav-btn:hover { background: var(--accent); }
 
         footer {
             margin-top: 25px;
@@ -231,7 +225,7 @@
 </head>
 <body>
 
-    <!-- شاشة الباسورد المقسمة (صورة يمين وخانة إدخال واسمك شمال) -->
+    <!-- 1. شاشة الباسورد -->
     <div id="lock-screen">
         <div class="lock-img-side">
             <img src="b1.jpg" alt="Judy Photo" onerror="this.src='https://via.placeholder.com/400x500?text=b1.jpg'">
@@ -249,37 +243,48 @@
         </div>
     </div>
 
-    <!-- المحتوى بعد الباسورد -->
-    <div id="main-content">
-        
+    <!-- 2. صفحة الرسالة الطويلة -->
+    <div id="page-message" class="content-section">
         <div class="birthday-header">
             <h1>Happy Birthday Judy! 🎂🎉</h1>
         </div>
 
-        <!-- صورة كاملة قابلة للضغط مكتوب تحتها لأجدع صاحبة -->
-        <div class="photo-card" onclick="revealMessage()">
-            <div class="photo-frame">
-                <img src="b1.jpg" alt="Judy Photo" onerror="this.src='https://via.placeholder.com/600x400?text=b1.jpg+Not+Found'">
-            </div>
-            <div class="photo-caption">
-                <span>لأجدع صاحبة 👑</span>
-                <small style="font-size:0.85rem; color:var(--accent); font-weight:600;">(اضغطي هنا عشان تشوفي المفاجأة ✨)</small>
-            </div>
-        </div>
-
-        <!-- الرسالة الطويلة بالعامية المصرية -->
-        <div id="message-container">
-            <div class="message-box">
-                <b>كل سنة وأنتي طيبة يا جودي! 🤍✨</b><br><br>
-                النهارده مش أي يوم وخلاص، ده عيد ميلاد الشخصية اللي بجد غالية أوي وملازمنا في كل ضحكة وموقف. الواحد ساعات بيحتار يقول إيه ولا إيه، بس الحق ينقال أنتي مش مجرد صاحبة عادية بالنسبة لنا، أنتي الأخت اللي بجد بجد الواحد يفتخر إنه يعرفها ويطمن وهي جنبه.<br><br>
-                طول عمرك جدعة ومعدنك أصيل ونظيف، ومستحيل في يوم الواحد يشك في جدعنتك ولا يقلق من ناحيتك لأنك بتثبتي في كل موقف صغيرة وكبيرة إنك سند حقيقي وقد المسؤولية وزيادة. وجودك بيفرق كتير في أي مكان بتبقي فيه، ودايماً ضحكتك وطاقتك بتبسط الكل.<br><br>
-                يا رب تكون سنة جديدة سعيدة عليكي، مليانة فرح وراحة بال، وتشوف فيها كل النجاح والتوفيق وتحققي كل اللي نفسك فيه وتفضلي دايماً منورة حياتنا ومكسرة الدنيا! 🚀❤️<br><br>
-                <div style="text-align: center; margin-top: 20px; font-weight: 900; font-size: 1.3rem; color: var(--accent);">
-                    كل سنة وأنتي معانا يا جودي! 🎂✨
-                </div>
+        <div class="message-box">
+            <b>كل سنة وأنتي طيبة يا جودي! 🤍✨</b><br><br>
+            النهارده مش أي يوم وخلاص، ده عيد ميلاد الشخصية اللي بجد غالية أوي وملازمنا في كل ضحكة وموقف. الواحد ساعات بيحتار يقول إيه ولا إيه، بس الحق ينقال أنتي مش مجرد صاحبة عادية بالنسبة لنا، أنتي الأخت اللي بجد بجد الواحد يفتخر إنه يعرفها ويطمن وهي جنبه.<br><br>
+            طول عمرك جدعة ومعدنك أصيل ونظيف، ومستحيل في يوم الواحد يشك في جدعنتك ولا يقلق من ناحيتك لأنك بتثبتي في كل موقف صغيرة وكبيرة إنك سند حقيقي وقد المسؤولية وزيادة. وجودك بيفرق كتير في أي مكان بتبقي فيه، ودايماً ضحكتك وطاقتك بتبسط الكل.<br><br>
+            يا رب تكون سنة جديدة سعيدة عليكي، مليانة فرح وراحة بال، وتشوف فيها كل النجاح والتوفيق وتحققي كل اللي نفسك فيه وتفضلي دايماً منورة حياتنا ومكسرة الدنيا! 🚀❤️<br><br>
+            <div style="text-align: center; margin-top: 15px; font-weight: 900; font-size: 1.3rem; color: var(--accent);">
+                كل سنة وأنتي معانا يا جودي! 🎂✨
             </div>
         </div>
 
+        <button class="btn" onclick="showGallery()" style="width: auto; padding: 14px 35px; font-size: 1.1rem;">
+            التالي ➡️
+        </button>
+    </div>
+
+    <!-- 3. صفحة معرض الصور (Next Page) -->
+    <div id="page-gallery" class="content-section">
+        <div class="birthday-header">
+            <h1>أجمل الذكريات 📸✨</h1>
+        </div>
+
+        <div class="gallery-card">
+            <div class="gallery-frame">
+                <img id="gallery-img" src="b1.jpg" alt="Judy Gallery" onerror="this.src='https://via.placeholder.com/600x400?text=Upload+Images'">
+            </div>
+            
+            <div class="gallery-controls">
+                <button class="nav-btn" onclick="prevImage()">السابق ⬅️</button>
+                <span id="img-counter" style="font-weight:700; color:var(--primary);">1 / 3</span>
+                <button class="nav-btn" onclick="nextImage()">التالي ➡️</button>
+            </div>
+        </div>
+
+        <button class="btn" onclick="showMessagePage()" style="width: auto; background:#475569; margin-top:10px;">
+            ⬅️ العودة للرسالة
+        </button>
     </div>
 
     <footer>
@@ -288,13 +293,17 @@
     </footer>
 
     <script>
+        // قائمة أسماء الصور (تقدر ترفع b1.jpg و b2.jpg و b3.jpg في جيت هب)
+        const images = ["b1.jpg", "b2.jpg", "b3.jpg"];
+        let currentImgIndex = 0;
+
         function checkPassword() {
-            TheVal = document.getElementById('pass-input').value;
+            const inputVal = document.getElementById('pass-input').value;
             const correctPass = "25122008";
 
-            if (TheVal === correctPass) {
+            if (inputVal === correctPass) {
                 document.getElementById('lock-screen').style.display = 'none';
-                document.getElementById('main-content').style.display = 'flex';
+                document.getElementById('page-message').style.display = 'flex';
             } else {
                 const err = document.getElementById('pass-error');
                 err.style.display = 'block';
@@ -302,10 +311,30 @@
             }
         }
 
-        function revealMessage() {
-            const msgContainer = document.getElementById('message-container');
-            msgContainer.classList.add('show');
-            msgContainer.scrollIntoView({ behavior: 'smooth' });
+        function showGallery() {
+            document.getElementById('page-message').style.display = 'none';
+            document.getElementById('page-gallery').style.display = 'flex';
+            updateGallery();
+        }
+
+        function showMessagePage() {
+            document.getElementById('page-gallery').style.display = 'none';
+            document.getElementById('page-message').style.display = 'flex';
+        }
+
+        function updateGallery() {
+            document.getElementById('gallery-img').src = images[currentImgIndex];
+            document.getElementById('img-counter').innerText = `${currentImgIndex + 1} / ${images.length}`;
+        }
+
+        function nextImage() {
+            currentImgIndex = (currentImgIndex + 1) % images.length;
+            updateGallery();
+        }
+
+        function prevImage() {
+            currentImgIndex = (currentImgIndex - 1 + images.length) % images.length;
+            updateGallery();
         }
     </script>
 </body>
